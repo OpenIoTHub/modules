@@ -1,3 +1,4 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
 class Constants {
@@ -18,4 +19,6 @@ class Constants {
   static final String oscClientID = "4rWcDXCNTV5gMWxtagxI";
 
   static final String endLineTag = "COMPLETE";
+
+  static final EventBus eventBus = new EventBus();
 }
