@@ -23,7 +23,7 @@ dependencies:
   #  grpc协议
   protobuf: ^1.0.1
   #  颜色选择器
-  flutter_colorpicker: 0.3.2
+  flutter_colorpicker: ^0.3.2
   #  webDAV的文件浏览器
   webdav:
     git: https://github.com/OpenIoTHub/dart-webdav
