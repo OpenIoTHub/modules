@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:modules/constants/Config.dart';
-import '../../../model/portService.dart';
-import '../commWidgets/info.dart';
-import '../commWidgets/uploadOTA.dart';
+import 'package:modules/model/portService.dart';
+import 'package:modules/pages/mdnsService/commWidgets/info.dart';
+import 'package:modules/pages/mdnsService/commWidgets/uploadOTA.dart';
 
 class PhicommTC1A1PluginPage extends StatefulWidget {
   PhicommTC1A1PluginPage({Key key, this.device}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:modules/constants/Config.dart';
-import '../../model/portService.dart';
+import 'package:modules/model/portService.dart';
 import './components.dart';
 //兼容的mdns类型，最终的落地点都在ModelsMap里
 class MDNS2ModelsMap {

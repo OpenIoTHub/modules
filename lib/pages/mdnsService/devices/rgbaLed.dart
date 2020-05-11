@@ -4,9 +4,9 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:modules/constants/Config.dart';
-import '../../../model/portService.dart';
-import '../commWidgets/info.dart';
-import '../commWidgets/uploadOTA.dart';
+import 'package:modules/model/portService.dart';
+import 'package:modules/pages/mdnsService/commWidgets/info.dart';
+import 'package:modules/pages/mdnsService/commWidgets/uploadOTA.dart';
 
 class RGBALedPage extends StatefulWidget {
   RGBALedPage({Key key, this.device}) : super(key: key);

@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:modules/model/custom_theme.dart';
 import 'package:provider/provider.dart';
-import '../../../model/portService.dart';
-import '../commWidgets/info.dart';
+import 'package:modules/model/portService.dart';
+import 'package:modules/pages/mdnsService/commWidgets/info.dart';
 import 'package:webdav/webdav.dart';
 
 //手动注册一些端口到mdns的声明，用于接入一些传统的设备或者服务或者帮助一些不方便注册mdns的设备或服务注册

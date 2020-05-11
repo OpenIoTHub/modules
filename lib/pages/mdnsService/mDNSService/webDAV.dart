@@ -4,8 +4,8 @@ import 'package:modules/model/custom_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '../../../model/portService.dart';
-import '../commWidgets/info.dart';
+import 'package:modules/model/portService.dart';
+import 'package:modules/pages/mdnsService/commWidgets/info.dart';
 import 'package:webdav/webdav.dart';
 
 class WebDAVPage extends StatefulWidget {

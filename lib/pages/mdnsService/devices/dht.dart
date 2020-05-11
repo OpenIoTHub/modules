@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../../model/portService.dart';
-import '../commWidgets/info.dart';
-import '../commWidgets/uploadOTA.dart';
+import 'package:modules/model/portService.dart';
+import 'package:modules/pages/mdnsService/commWidgets/info.dart';
+import 'package:modules/pages/mdnsService/commWidgets/uploadOTA.dart';
 
 class DHTPage extends StatefulWidget {
   DHTPage({Key key, this.device}) : super(key: key);

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:modules/api/SessionApi.dart';
+import 'package:modules/api/OpenIoTHub/SessionApi.dart';
 import 'package:openiothub_grpc_api/pb/service.pb.dart';
 
-import '../../../model/portService.dart';
-import '../commWidgets/info.dart';
+import 'package:modules/model/portService.dart';
+import 'package:modules/pages/mdnsService/commWidgets/info.dart';
 
 class Gateway extends StatefulWidget {
   Gateway({Key key, this.serviceInfo}) : super(key: key);

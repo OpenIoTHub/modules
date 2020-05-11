@@ -5,8 +5,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:modules/constants/Config.dart';
-import '../../../model/portService.dart';
-import '../commWidgets/info.dart';
+import 'package:modules/model/portService.dart';
+import 'package:modules/pages/mdnsService/commWidgets/info.dart';
 
 class UART2TCPPage extends StatefulWidget {
   UART2TCPPage({Key key, this.device}) : super(key: key);

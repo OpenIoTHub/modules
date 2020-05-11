@@ -133,7 +133,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "00da2060979cd0b904d2a188e977d46f71efd422"
+      resolved-ref: "9da3840f2d9c71efd732a7308088093ab29dea71"
       url: "https://github.com/OpenIoTHub/gateway-grpc-api"
     source: git
     version: "1.0.0"
@@ -219,7 +219,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "457ea6a5428380843bf5f82d3e310a38351e61b7"
+      resolved-ref: "0149c4cce17a76561bf2f92867074f1d05f1f11e"
       url: "https://github.com/OpenIoTHub/openiothub-grpc-api"
     source: git
     version: "1.0.0"
@@ -299,7 +299,7 @@ packages:
       name: protobuf
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.13.16+1"
+    version: "1.0.1"
   provider:
     dependency: "direct main"
     description:
@@ -326,7 +326,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "1245cc896ec550b5584083b5e6e1ee975d1e4e50"
+      resolved-ref: d212905494424795bf9543122cfb23dad1c30377
       url: "https://github.com/OpenIoTHub/server-grpc-api"
     source: git
     version: "1.0.0"
