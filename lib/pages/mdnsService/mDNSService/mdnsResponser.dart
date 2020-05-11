@@ -1,6 +1,5 @@
 //这个模型是用来使用WebDAV的文件服务器来操作文件的
 import 'package:flutter/material.dart';
-import 'package:modules/model/custom_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:modules/model/portService.dart';
 import 'package:modules/pages/mdnsService/commWidgets/info.dart';
@@ -33,9 +32,7 @@ class _MDNSResponserPageState extends State<MDNSResponserPage> {
                 }
               },
               child: ListTile(
-                leading: pair.isDirectory?Icon(Icons.folder_open,color: Provider.of<CustomTheme>(context).themeValue == "dark"
-                    ? CustomThemes.dark.accentColor
-                    : CustomThemes.light.accentColor,):Icon(Icons.insert_drive_file),
+                leading: pair.isDirectory?Icon(Icons.folder_open,color:Colors.black):Icon(Icons.insert_drive_file),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
