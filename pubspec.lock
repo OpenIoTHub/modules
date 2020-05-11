@@ -133,7 +133,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "625294883c9b52e2e9e6e6906563c871e33dd37e"
+      resolved-ref: "00da2060979cd0b904d2a188e977d46f71efd422"
       url: "https://github.com/OpenIoTHub/gateway-grpc-api"
     source: git
     version: "1.0.0"
@@ -219,7 +219,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "19f8fef2860edad7386fc14b072e0cab262c78df"
+      resolved-ref: "457ea6a5428380843bf5f82d3e310a38351e61b7"
       url: "https://github.com/OpenIoTHub/openiothub-grpc-api"
     source: git
     version: "1.0.0"
@@ -326,7 +326,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: eabd1b875d2339972236f303384f4a0693b523dd
+      resolved-ref: "1245cc896ec550b5584083b5e6e1ee975d1e4e50"
       url: "https://github.com/OpenIoTHub/server-grpc-api"
     source: git
     version: "1.0.0"

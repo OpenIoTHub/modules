@@ -21,7 +21,7 @@ dependencies:
   #  grpc
   grpc: ^1.0.2
   #  grpc协议
-  protobuf: ^0.13.11
+  protobuf: ^1.0.1
   #  颜色选择器
   flutter_colorpicker: ^0.3.2
   #  webDAV的文件浏览器
