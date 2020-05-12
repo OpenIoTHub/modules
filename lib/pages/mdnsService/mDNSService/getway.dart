@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:modules/api/GateWay/GatewayLoginManager.dart';
 import 'package:gateway_grpc_api/pb/service.pb.dart';
 import 'package:gateway_grpc_api/pb/service.pbgrpc.dart';
-import 'package:grpc/grpc.dart';
 import 'package:modules/api/OpenIoTHub/SessionApi.dart';
 
 import 'package:modules/model/portService.dart';
@@ -25,34 +22,35 @@ class Gateway extends StatefulWidget {
 class GatewayState extends State<Gateway> {
 //  string ServerHost = 1;
   TextEditingController _ServerHost_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "guonei.nat-cloud.com"));
+      TextEditingController.fromValue(
+          TextEditingValue(text: "guonei.nat-cloud.com"));
 //  string LoginKey = 2;
   TextEditingController _LoginKey_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "HLLdsa544&*S"));
+      TextEditingController.fromValue(TextEditingValue(text: "HLLdsa544&*S"));
 //  string ConnectionType = 3;
   TextEditingController _ConnectionType_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "tcp"));
+      TextEditingController.fromValue(TextEditingValue(text: "tcp"));
 //  string LastId = 4;
   TextEditingController _LastId_controller =
-  TextEditingController.fromValue(TextEditingValue(text: ""));
+      TextEditingController.fromValue(TextEditingValue(text: ""));
 //  int64 TcpPort = 5;
   TextEditingController _TcpPort_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "34320"));
+      TextEditingController.fromValue(TextEditingValue(text: "34320"));
 //  int64 KcpPort = 6;
   TextEditingController _KcpPort_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "34320"));
+      TextEditingController.fromValue(TextEditingValue(text: "34320"));
 //  int64 UdpApiPort = 7;
   TextEditingController _UdpApiPort_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "34321"));
+      TextEditingController.fromValue(TextEditingValue(text: "34321"));
 //  int64 KcpApiPort = 8;
   TextEditingController _KcpApiPort_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "34322"));
+      TextEditingController.fromValue(TextEditingValue(text: "34322"));
 //  int64 TlsPort = 9;
   TextEditingController _TlsPort_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "34321"));
+      TextEditingController.fromValue(TextEditingValue(text: "34321"));
 //  int64 GrpcPort = 10;
   TextEditingController _GrpcPort_controller =
-  TextEditingController.fromValue(TextEditingValue(text: "34322"));
+      TextEditingController.fromValue(TextEditingValue(text: "34322"));
 
   @override
   Widget build(BuildContext context) {
@@ -202,66 +200,67 @@ class GatewayState extends State<Gateway> {
       serverInfo.tlsPort = int.parse(_TlsPort_controller.text);
       serverInfo.grpcPort = int.parse(_GrpcPort_controller.text);
 
-      LoginResponse loginResponse = await GatewayLoginManager.LoginServerByServerInfo(serverInfo,
-          widget.serviceInfo.ip, widget.serviceInfo.port);
+      LoginResponse loginResponse =
+          await GatewayLoginManager.LoginServerByServerInfo(
+              serverInfo, widget.serviceInfo.ip, widget.serviceInfo.port);
 //    自动添加到我的列表
       if (loginResponse.loginStatus) {
         showDialog(
             context: context,
             builder: (_) => AlertDialog(
-                title: Text("登录结果"),
-                content: Text("登录成功！现在可以获取访问Token来访问本内网了！"),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text("取消"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  FlatButton(
-                    child: Text("添加内网"),
-                    onPressed: () {
-                      addToMySessionList().then((_) {
-                        Navigator.of(context).pop();
-                      });
-                    },
-                  )
-                ]));
+                    title: Text("登录结果"),
+                    content: Text("登录成功！现在可以获取访问Token来访问本内网了！"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("取消"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("添加内网"),
+                        onPressed: () {
+                          addToMySessionList().then((_) {
+                            Navigator.of(context).pop();
+                          });
+                        },
+                      )
+                    ]));
       } else {
         showDialog(
             context: context,
             builder: (_) => AlertDialog(
-                title: Text("登录结果"),
-                content: Text("登录失败：${loginResponse.message}"),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text("确定"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ]));
+                    title: Text("登录结果"),
+                    content: Text("登录失败：${loginResponse.message}"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("确定"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ]));
       }
     } catch (exception) {
       showDialog(
           context: context,
           builder: (_) => AlertDialog(
-              title: Text("登录服务器错误"),
-              content: Text(exception.toString()),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text("取消"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                FlatButton(
-                  child: Text("确认"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ]));
+                  title: Text("登录服务器错误"),
+                  content: Text(exception.toString()),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("取消"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: Text("确认"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ]));
     }
   }
 
@@ -269,62 +268,56 @@ class GatewayState extends State<Gateway> {
     try {
       Token token = await GatewayLoginManager.GetOpenIoTHubToken(
           widget.serviceInfo.ip, widget.serviceInfo.port);
-          showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                title: Text("本内网访问Token"),
-                content: TextFormField(initialValue: token.value),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text("取消"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  FlatButton(
-                    child: Text("复制到剪切板"),
-                    onPressed: () {
-                      Clipboard.setData(
-                          ClipboardData(text: token.value));
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ]));
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                  title: Text("本内网访问Token"),
+                  content: TextFormField(initialValue: token.value),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("取消"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: Text("复制到剪切板"),
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: token.value));
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ]));
     } catch (e) {
       showDialog(
           context: context,
           builder: (_) => AlertDialog(
-              title: Text("获取Token出现错误！"),
-              content: Text(e.toString()),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text("取消"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                FlatButton(
-                  child: Text("确认"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ]));
+                  title: Text("获取Token出现错误！"),
+                  content: Text(e.toString()),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("取消"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: Text("确认"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ]));
     }
   }
 
   Future addToMySessionList() async {
-    var url = 'http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}/getExplorerToken';
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data['Code'] == 0) {
-        SessionConfig config = SessionConfig();
-        config.token = data['Token'];
-        config.description = '我的网络';
-        createOneSession(config);
-      }
-    }
+    Token token = await GatewayLoginManager.GetOpenIoTHubToken(
+        widget.serviceInfo.ip, widget.serviceInfo.port);
+    SessionConfig config = SessionConfig();
+    config.token = token.value;
+    config.description = '我的网络';
+    createOneSession(config);
   }
 
   Future createOneSession(SessionConfig config) async {
