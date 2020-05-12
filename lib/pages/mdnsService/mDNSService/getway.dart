@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:modules/api/GateWay/GatewayLoginManager.dart';
+import 'package:gateway_grpc_api/pb/service.pb.dart';
+import 'package:gateway_grpc_api/pb/service.pbgrpc.dart';
+import 'package:grpc/grpc.dart';
 import 'package:modules/api/OpenIoTHub/SessionApi.dart';
-import 'package:openiothub_grpc_api/pb/service.pb.dart';
 
 import 'package:modules/model/portService.dart';
 import 'package:modules/pages/mdnsService/commWidgets/info.dart';
+import 'package:openiothub_grpc_api/pb/service.pb.dart';
 
 class Gateway extends StatefulWidget {
   Gateway({Key key, this.serviceInfo}) : super(key: key);
@@ -19,16 +23,36 @@ class Gateway extends StatefulWidget {
 }
 
 class GatewayState extends State<Gateway> {
-  TextEditingController _host_controller = TextEditingController.fromValue(
-      TextEditingValue(text: "guonei.nat-cloud.com"));
-  TextEditingController _tcp_port_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "34320"));
-  TextEditingController _udp_p2p_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "34321"));
-  TextEditingController _key_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "HLLdsa544&*S"));
-  TextEditingController _runid_controller =
-      TextEditingController.fromValue(TextEditingValue(text: ""));
+//  string ServerHost = 1;
+  TextEditingController _ServerHost_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "guonei.nat-cloud.com"));
+//  string LoginKey = 2;
+  TextEditingController _LoginKey_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "HLLdsa544&*S"));
+//  string ConnectionType = 3;
+  TextEditingController _ConnectionType_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "tcp"));
+//  string LastId = 4;
+  TextEditingController _LastId_controller =
+  TextEditingController.fromValue(TextEditingValue(text: ""));
+//  int64 TcpPort = 5;
+  TextEditingController _TcpPort_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "34320"));
+//  int64 KcpPort = 6;
+  TextEditingController _KcpPort_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "34320"));
+//  int64 UdpApiPort = 7;
+  TextEditingController _UdpApiPort_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "34321"));
+//  int64 KcpApiPort = 8;
+  TextEditingController _KcpApiPort_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "34322"));
+//  int64 TlsPort = 9;
+  TextEditingController _TlsPort_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "34321"));
+//  int64 GrpcPort = 10;
+  TextEditingController _GrpcPort_controller =
+  TextEditingController.fromValue(TextEditingValue(text: "34322"));
 
   @override
   Widget build(BuildContext context) {
@@ -48,44 +72,94 @@ class GatewayState extends State<Gateway> {
         ),
         body: ListView(
           children: <Widget>[
+//        string ServerHost = 1;
             TextFormField(
-              controller: _host_controller,
+              controller: _ServerHost_controller,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10.0),
                 labelText: '请输入服务器地址',
-                helperText: '输入ip或者域名',
+                helperText: 'ServerHost',
               ),
             ),
+//        string LoginKey = 2;
             TextFormField(
-              controller: _tcp_port_controller,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.0),
-                labelText: '请输入服务器TCP端口',
-                helperText: '与服务器的设置一致：tcp_port',
-              ),
-            ),
-            TextFormField(
-              controller: _udp_p2p_controller,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.0),
-                labelText: '请输入服务器udp_p2p端口',
-                helperText: '请输入服务器设置一致：udp_p2p_port',
-              ),
-            ),
-            TextFormField(
-              controller: _key_controller,
+              controller: _LoginKey_controller,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10.0),
                 labelText: '请输入服务器秘钥',
-                helperText: '请输入服务器设置一致：login_key',
+                helperText: 'LoginKey',
               ),
             ),
+//        string ConnectionType = 3;
             TextFormField(
-              controller: _runid_controller,
+              controller: _ConnectionType_controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10.0),
+                labelText: '请输入连接服务器的方式',
+                helperText: 'ConnectionType',
+              ),
+            ),
+//        string LastId = 4;
+            TextFormField(
+              controller: _LastId_controller,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10.0),
                 labelText: '请输入本内网id',
-                helperText: '可以随机输入一个UUID，可以留空随机生成',
+                helperText: 'LastId',
+              ),
+            ),
+//        int64 TcpPort = 5;
+            TextFormField(
+              controller: _TcpPort_controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10.0),
+                labelText: '请输入服务器TCP端口',
+                helperText: 'TcpPort',
+              ),
+            ),
+//        int64 KcpPort = 6;
+            TextFormField(
+              controller: _KcpPort_controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10.0),
+                labelText: '请输入服务器KCP端口',
+                helperText: 'KcpPort',
+              ),
+            ),
+//        int64 UdpApiPort = 7;
+            TextFormField(
+              controller: _UdpApiPort_controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10.0),
+                labelText: '请输入服务器UdpApiPort端口',
+                helperText: 'UdpApiPort',
+              ),
+            ),
+//        int64 KcpApiPort = 8;
+            TextFormField(
+              controller: _KcpApiPort_controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10.0),
+                labelText: '请输入服务器KcpApiPort端口',
+                helperText: 'KcpApiPort',
+              ),
+            ),
+//        int64 TlsPort = 9;
+            TextFormField(
+              controller: _TlsPort_controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10.0),
+                labelText: '请输入服务器TlsPort端口',
+                helperText: 'TlsPort',
+              ),
+            ),
+//        int64 GrpcPort = 10;
+            TextFormField(
+              controller: _GrpcPort_controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10.0),
+                labelText: '请输入服务器GrpcPort端口',
+                helperText: 'GrpcPort',
               ),
             ),
             Row(
@@ -114,65 +188,59 @@ class GatewayState extends State<Gateway> {
   }
 
   login() async {
-    var url = 'http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}/loginServer';
-    var response;
     try {
-      var config = {
-        'last_id': _runid_controller.text,
-        'server_host': _host_controller.text,
-        'tcp_port': _tcp_port_controller.text,
-        'udp_p2p_port': _udp_p2p_controller.text,
-        'login_key': _key_controller.text
-      };
-      response = await http.post(url, body: config);
+      ServerInfo serverInfo = ServerInfo();
+
+      serverInfo.serverHost = _ServerHost_controller.text;
+      serverInfo.loginKey = _LoginKey_controller.text;
+      serverInfo.connectionType = _ConnectionType_controller.text;
+      serverInfo.lastId = _LastId_controller.text;
+      serverInfo.tcpPort = int.parse(_TcpPort_controller.text);
+      serverInfo.kcpPort = int.parse(_KcpPort_controller.text);
+      serverInfo.udpApiPort = int.parse(_UdpApiPort_controller.text);
+      serverInfo.kcpApiPort = int.parse(_KcpApiPort_controller.text);
+      serverInfo.tlsPort = int.parse(_TlsPort_controller.text);
+      serverInfo.grpcPort = int.parse(_GrpcPort_controller.text);
+
+      LoginResponse loginResponse = await GatewayLoginManager.LoginServerByServerInfo(serverInfo,
+          widget.serviceInfo.ip, widget.serviceInfo.port);
 //    自动添加到我的列表
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        if (data['Code'] == 0) {
-          showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                  title: Text("登录结果"),
-                  content: Text("登录成功！现在可以获取访问Token来访问本内网了！"),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("取消"),
-                      onPressed: () {
+      if (loginResponse.loginStatus) {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                title: Text("登录结果"),
+                content: Text("登录成功！现在可以获取访问Token来访问本内网了！"),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("取消"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text("添加内网"),
+                    onPressed: () {
+                      addToMySessionList().then((_) {
                         Navigator.of(context).pop();
-                      },
-                    ),
-                    FlatButton(
-                      child: Text("添加内网"),
-                      onPressed: () {
-                        addToMySessionList().then((_) {
-                          Navigator.of(context).pop();
-                        });
-                      },
-                    )
-                  ]));
-        } else {
-          showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                  title: Text("登录结果"),
-                  content: Text("登录失败：" + data['Msg'].toString()),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("取消"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    FlatButton(
-                      child: Text("添加内网"),
-                      onPressed: () {
-                        addToMySessionList().then((_) {
-                          Navigator.of(context).pop();
-                        });
-                      },
-                    )
-                  ]));
-        }
+                      });
+                    },
+                  )
+                ]));
+      } else {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                title: Text("登录结果"),
+                content: Text("登录失败：${loginResponse.message}"),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("确定"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ]));
       }
     } catch (exception) {
       showDialog(
@@ -198,36 +266,30 @@ class GatewayState extends State<Gateway> {
   }
 
   seeToken() async {
-    var url = 'http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}/getExplorerToken';
-    var response;
     try {
-      response = await http.get(url);
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        if (data['Code'] == 0) {
+      Token token = await GatewayLoginManager.GetOpenIoTHubToken(
+          widget.serviceInfo.ip, widget.serviceInfo.port);
           showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                  title: Text("本内网访问Token"),
-                  content: TextFormField(initialValue: data['Token']),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("取消"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    FlatButton(
-                      child: Text("复制到剪切板"),
-                      onPressed: () {
-                        Clipboard.setData(
-                            ClipboardData(text: data['Token']));
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ]));
-        }
-      }
+            context: context,
+            builder: (_) => AlertDialog(
+                title: Text("本内网访问Token"),
+                content: TextFormField(initialValue: token.value),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("取消"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text("复制到剪切板"),
+                    onPressed: () {
+                      Clipboard.setData(
+                          ClipboardData(text: token.value));
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ]));
     } catch (e) {
       showDialog(
           context: context,
