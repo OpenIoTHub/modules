@@ -9,15 +9,14 @@ class AppInfoPage extends StatefulWidget {
 }
 
 class _AppInfoPageState extends State<AppInfoPage> {
-
   //APP名称
-  String appName ;
+  String appName;
   //包名
-  String packageName ;
+  String packageName;
   //版本名
-  String  version ;
+  String version;
   //版本号
-  String buildNumber ;
+  String buildNumber;
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
     _result.add("版本号:$buildNumber");
 
     final tiles = _result.map(
-          (pair) {
+      (pair) {
         return ListTile(
           title: Text(
             pair,
@@ -56,15 +55,13 @@ class _AppInfoPageState extends State<AppInfoPage> {
   }
 
   _getAppInfo() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    //APP名称
-    appName = packageInfo.appName;
-    //包名
-    packageName = packageInfo.packageName;
-    //版本名
-    version = packageInfo.version;
-    //版本号
-    buildNumber = packageInfo.buildNumber;
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      setState(() {
+        appName = packageInfo.appName;
+        packageName = packageInfo.packageName;
+        version = packageInfo.version;
+        buildNumber = packageInfo.buildNumber;
+      });
+    });
   }
-
 }
