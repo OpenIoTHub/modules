@@ -18,7 +18,7 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
     implements mdns_plugin.MDNSPluginDelegate {
   static const double IMAGE_ICON_WIDTH = 30.0;
 
-  List<PortService> _ServiceList = [];
+  Map<String, PortService> _ServiceMap = {};
   mdns_plugin.MDNSPlugin _mdns;
 
   @override
@@ -36,7 +36,7 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
 
   @override
   Widget build(BuildContext context) {
-    final tiles = _ServiceList.map(
+    final tiles = _ServiceMap.values.map(
       (pair) {
         var listItemContent = Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
@@ -90,7 +90,7 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
   }
 
   void _findClientListBymDNS() async {
-    _ServiceList.clear();
+    _ServiceMap.clear();
     _mdns.startDiscovery(Config.mdnsGatewayService, enableUpdating: true);
   }
 
@@ -122,9 +122,11 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
       portService.port = service.port;
       portService.info["id"] = "${portService.ip}:${portService.port}@local";
       portService.isLocal = true;
-      setState(() {
-        _ServiceList.add(portService);
-      });
+      if (!_ServiceMap.containsKey(portService.info["id"])){
+        setState(() {
+          _ServiceMap[portService.info["id"]] = portService;
+        });
+      }
     } catch (e) {
       showDialog(
           context: context,
