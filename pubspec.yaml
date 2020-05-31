@@ -32,7 +32,7 @@ dependencies:
   #  打开url
   url_launcher: ^5.0.2
   #  数据存储
-  shared_preferences: ^0.5.2
+  shared_preferences: ^0.5.7+2
   #  事件总线
   event_bus: ^1.1.0
   #  配网start
