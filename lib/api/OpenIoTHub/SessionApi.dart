@@ -28,6 +28,13 @@ class SessionApi {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> newscl = await prefs.getStringList('sessions');
     print("newscl:$newscl");
+    await newscl.forEach((String s) {
+      Map scMap = jsonDecode(s);
+      SessionConfig config = SessionConfig();
+      config.token = scMap["token"];
+      config.description = scMap["description"];
+      createOneSession(config);
+    });
   }
 
 //  TODO 可以选择grpc所执行的主机，可以是安卓本机也可以是pc，也可以是服务器
