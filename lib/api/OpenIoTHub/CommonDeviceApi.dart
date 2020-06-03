@@ -3,6 +3,8 @@ import 'package:openiothub_grpc_api/pb/service.pbgrpc.dart';
 
 import 'package:modules/api/OpenIoTHub/OpenIoTHubChannel.dart';
 
+import 'Utils.dart';
+
 class CommonDeviceApi {
   //设置设备的物理地址
   static Future setDeviceMac(Device device) async {
@@ -11,6 +13,7 @@ class CommonDeviceApi {
     final response = await stub.setDeviceMac(device);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  设备网络唤醒
@@ -30,6 +33,7 @@ class CommonDeviceApi {
     final response = await stub.addDevice(device);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  rpc DelDevice (Device) returns (Empty) {}
@@ -39,6 +43,7 @@ class CommonDeviceApi {
     final response = await stub.delDevice(device);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  rpc GetAllDevice (Empty) returns (DeviceList) {}
@@ -49,6 +54,7 @@ class CommonDeviceApi {
     print('Greeter client received: ${response}');
     channel.shutdown();
     return response;
+    UtilApi.saveAllConfig();
   }
 
   // TCP
@@ -59,6 +65,7 @@ class CommonDeviceApi {
     final response = await stub.createOneTCP(config);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  rpc DeleteOneTCP (PortConfig) returns (Empty) {}
@@ -68,6 +75,7 @@ class CommonDeviceApi {
     final response = await stub.deleteOneTCP(config);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  rpc GetOneTCP (PortConfig) returns (PortConfig) {}
@@ -98,6 +106,7 @@ class CommonDeviceApi {
     final response = await stub.createOneUDP(config);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  rpc DeleteOneUDP (PortConfig) returns (Empty) {}
@@ -107,6 +116,7 @@ class CommonDeviceApi {
     final response = await stub.deleteOneUDP(config);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  rpc GetOneUDP (PortConfig) returns (PortConfig) {}
@@ -137,6 +147,7 @@ class CommonDeviceApi {
     final response = await stub.createOneFTP(config);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  rpc DeleteOneFTP (PortConfig) returns (Empty) {}
@@ -146,6 +157,7 @@ class CommonDeviceApi {
     final response = await stub.deleteOneFTP(config);
     print('Greeter client received: ${response}');
     channel.shutdown();
+    UtilApi.saveAllConfig();
   }
 
 //  rpc GetOneFTP (PortConfig) returns (PortConfig) {}
