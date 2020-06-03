@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:modules/constants/Config.dart';
 import 'package:modules/constants/Constants.dart';
@@ -175,27 +177,31 @@ class OpenWithChoice extends StatelessWidget {
               Navigator.of(ctx).pop();
             });
           } else if (title == 'Web') {
-            Navigator.push(ctx, MaterialPageRoute(builder: (ctx) {
-              return Scaffold(
-                appBar: AppBar(title: new Text("网页浏览器"), actions: <Widget>[
-                  IconButton(
-                      icon: Icon(
-                        Icons.open_in_browser,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        _launchURL(
-                            "http://${Config.webgRpcIp}:${portConfig.localProt}");
-                      })
-                ]),
-                body: WebView(
-                  initialUrl: "http://${Config.webgRpcIp}:${portConfig.localProt}",
-                  javascriptMode : JavascriptMode.unrestricted
-                ),
-              );
-            })).then((_) {
-              Navigator.of(ctx).pop();
-            });
+            if (Platform.isIOS) {
+              _launchURL("http://${Config.webgRpcIp}:${portConfig.localProt}");
+            } else {
+              Navigator.push(ctx, MaterialPageRoute(builder: (ctx) {
+                return Scaffold(
+                  appBar: AppBar(title: new Text("网页浏览器"), actions: <Widget>[
+                    IconButton(
+                        icon: Icon(
+                          Icons.open_in_browser,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _launchURL(
+                              "http://${Config.webgRpcIp}:${portConfig.localProt}");
+                        })
+                  ]),
+                  body: WebView(
+                      initialUrl:
+                          "http://${Config.webgRpcIp}:${portConfig.localProt}",
+                      javascriptMode: JavascriptMode.unrestricted),
+                );
+              })).then((_) {
+                Navigator.of(ctx).pop();
+              });
+            }
           } else if (title == 'RDP远程桌面') {
             var url =
                 'rdp://full%20address=s:${Config.webgRpcIp}:${portConfig.localProt}&audiomode=i:2&disable%20themes=i:1';
