@@ -6,14 +6,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UtilApi {
   static Future<void> saveAllConfig() async {
-    final config = await getAllConfig();
+    final allconfig = await getAllConfig();
+    print("getAllConfig:$allconfig");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('allconfig', config);
+    await prefs.setString('allconfig', allconfig);
   }
 
   static Future<void> loadAllConfig() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String allconfig = await prefs.getString('allconfig');
+    print("loadAllConfig:$allconfig");
     setAllConfig(allconfig);
   }
 //获取本地的所有mdns列表
