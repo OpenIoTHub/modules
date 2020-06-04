@@ -32,6 +32,16 @@ class SessionApi {
     return response;
   }
 
+  static Future<SessionConfig> getOneSession(String runId) async {
+    final channel = await Channel.getOpenIoTHubChannel();
+    final stub = SessionManagerClient(channel);
+    SessionConfig sessionConfig = SessionConfig();
+    sessionConfig.runId = runId;
+    final newSessionConfig = await stub.getOneSession(sessionConfig);
+    channel.shutdown();
+    return newSessionConfig;
+  }
+
   static Future<PortList> getAllTCP(SessionConfig sessionConfig) async {
     final channel = await Channel.getOpenIoTHubChannel();
     final stub = SessionManagerClient(channel);

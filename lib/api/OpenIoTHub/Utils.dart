@@ -70,4 +70,14 @@ class UtilApi {
     channel.shutdown();
     return response;
   }
+  //从Token字符串解析TokenModel
+  static Future<TokenModel> getTokenModel(String tokenStr) async {
+    final channel = await Channel.getOpenIoTHubChannel();
+    final stub = UtilsClient(channel);
+    StringValue sv = StringValue();
+    sv.value = tokenStr;
+    final response = await stub.getTokenModel(sv);
+    channel.shutdown();
+    return response;
+  }
 }
