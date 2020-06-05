@@ -1,6 +1,6 @@
 import 'package:modules/api/OpenIoTHub/SessionApi.dart';
 import 'package:modules/api/OpenIoTHub/Utils.dart';
-import 'package:openiothub_grpc_api/pb/service.pb.dart';
+import 'package:openiothub_grpc_api/pb/service.pb.dart' as openiothub;
 import 'package:server_grpc_api/pb/service.pb.dart';
 import 'package:server_grpc_api/pb/service.pbgrpc.dart' as server;
 import 'package:grpc/grpc.dart';
@@ -32,10 +32,15 @@ class HttpManager {
     return newHttpConfig;
   }
 //  rpc GetAllHTTP (Empty) returns (HTTPList) {}
-  static Future<HTTPList> GetAllHTTP(Device device) async {
+  static Future<HTTPList> GetAllHTTP(openiothub.Device device) async {
     final channel = await Channel.getServerChannel(device.runId);
     final stub = server.HttpManagerClient(channel);
-    HTTPList httpList = await stub.getAllHTTP(new server.Empty());
+    server.Device sdevice = server.Device();
+    sdevice.runId = device.runId;
+    sdevice.addr = device.addr;
+    sdevice.mac = device.mac;
+    sdevice.description = device.description;
+    HTTPList httpList = await stub.getAllHTTP(sdevice);
     channel.shutdown();
     return httpList;
   }

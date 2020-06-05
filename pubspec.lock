@@ -416,7 +416,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d212905494424795bf9543122cfb23dad1c30377
+      resolved-ref: "23f55b20097bc3ae8ae524ac7f187403da7844f7"
       url: "https://github.com/OpenIoTHub/server-grpc-api"
     source: git
     version: "1.0.0"
