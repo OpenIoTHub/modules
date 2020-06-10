@@ -18,4 +18,34 @@ class PortService {
   Map<String, dynamic> info;
 
   PortService({this.portConfig, this.info, this.isLocal, this.ip, this.port});
+
+  Map toJson() {
+    Map map = Map();
+    map['info'] = this.info;
+    map['isLocal'] = this.isLocal;
+    map['ip'] = this.ip;
+    map['port'] = this.port;
+    return map;
+  }
+
+  static PortService fromJson(Map<String, dynamic> map) {
+    PortService portService = PortService();
+    Map<String, String> newinfo = {
+      "name": map['info']['name'].toString(),
+      "model": map['info']['model'].toString(),
+      "mac": map['info']['mac'].toString(),
+      "id": map['info']['id'].toString(),
+      "author": map['info']['author'].toString(),
+      "email": map['info']['email'].toString(),
+      "home-page": map['info']['home-page'].toString(),
+      "firmware-respository": map['info']['firmware-respository'].toString(),
+      "firmware-version": map['info']['firmware-version'].toString(),
+    };
+
+    portService.info = newinfo;
+    portService.isLocal = map['isLocal'];
+    portService.ip = map['ip'];
+    portService.port = map['port'];
+    return portService;
+  }
 }

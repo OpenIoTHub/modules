@@ -14,7 +14,7 @@ class MDNS2ModelsMap {
     "firmware-respository": "https://github.com/iotdevice/*",
     "firmware-version": "version",
   };
-  static Map<String, dynamic> modelsMap = Map.from({
+  static Map<String, PortService> modelsMap = Map.from({
     //    web UI,http使用web方式打开服务的模型
     "_http._tcp": PortService(
         portConfig: null,
