@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:modules/constants/Constants.dart';
 import 'package:modules/model/portService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InfoPage extends StatelessWidget {
   InfoPage({Key key, this.portService}) : super(key: key);
@@ -38,8 +42,65 @@ class InfoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('设备信息'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.edit,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                TextEditingController _new_name_controller =
+                TextEditingController.fromValue(
+                    TextEditingValue(text: portService.info["name"]));
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                        title: Text("修改名称："),
+                        content: ListView(
+                          children: <Widget>[
+                            TextFormField(
+                              controller: _new_name_controller,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(10.0),
+                                labelText: '请输入新的名称',
+                                helperText: '名称',
+                              ),
+                            )
+                          ],
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text("取消"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          FlatButton(
+                            child: Text("修改"),
+                            onPressed: () {
+                              rename(portService.info["id"], _new_name_controller.text);
+                            },
+                          )
+                        ])).then((restlt) {
+                  Navigator.of(context).pop();
+                });
+              }),
+        ],
       ),
       body: ListView(children: divided),
     );
+  }
+
+  rename(String id, name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String> device_cname_map = Map<String, String>();
+    if(prefs.containsKey(Constants.DEVICE_CNAME)){
+      String device_cname = await prefs.getString(Constants.DEVICE_CNAME);
+      device_cname_map = jsonDecode(device_cname);
+      device_cname_map[id] = name;
+    }else{
+      device_cname_map[id] = name;
+    }
+    await prefs.setString(Constants.DEVICE_CNAME, jsonEncode(device_cname_map));
   }
 }

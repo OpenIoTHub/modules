@@ -9,6 +9,7 @@ import 'package:modules/model/portService.dart';
 import 'package:modules/pages/mdnsService/commWidgets/info.dart';
 import 'package:openiothub_grpc_api/pb/service.pb.dart';
 
+//TODO 配置保存，UUID生成
 class Gateway extends StatefulWidget {
   Gateway({Key key, this.serviceInfo}) : super(key: key);
 

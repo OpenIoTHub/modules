@@ -45,6 +45,7 @@ class _PhicommTC1A1PluginPageState extends State<PhicommTC1A1PluginPage> {
   });
 
   Map<String, String> _realName = Map.from({
+//    TODO 总开关
     slot0: "开关1",
     slot1: "开关2",
     slot2: "开关3",
