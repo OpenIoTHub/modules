@@ -93,7 +93,7 @@ class InfoPage extends StatelessWidget {
 
   rename(String id, name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, String> device_cname_map = Map<String, String>();
+    Map<String, dynamic> device_cname_map = Map<String, dynamic>();
     if(prefs.containsKey(Constants.DEVICE_CNAME)){
       String device_cname = await prefs.getString(Constants.DEVICE_CNAME);
       device_cname_map = jsonDecode(device_cname);
