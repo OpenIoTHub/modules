@@ -3,18 +3,19 @@ import 'package:openiothub_grpc_api/pb/service.pb.dart';
 import 'package:openiothub_grpc_api/pb/service.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:modules/constants/Constants.dart';
 
 class UtilApi {
   static Future<void> saveAllConfig() async {
     final allconfig = await getAllConfig();
     print("getAllConfig:$allconfig");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('allconfig', allconfig);
+    await prefs.setString(Constants.GO_AAR_CONFIG, allconfig);
   }
 
   static Future<void> loadAllConfig() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String allconfig = await prefs.getString('allconfig');
+    String allconfig = await prefs.getString(Constants.GO_AAR_CONFIG);
     print("loadAllConfig:$allconfig");
     setAllConfig(allconfig);
   }
