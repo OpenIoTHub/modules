@@ -77,8 +77,9 @@ class InfoPage extends StatelessWidget {
                           ),
                           FlatButton(
                             child: Text("修改"),
-                            onPressed: () {
-                              rename(portService.info["id"], _new_name_controller.text);
+                            onPressed: () async {
+                              await rename(portService.info["id"], _new_name_controller.text);
+                              Navigator.of(context).pop();
                             },
                           )
                         ])).then((restlt) {
