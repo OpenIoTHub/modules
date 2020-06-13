@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modules/api/GateWay/GatewayLoginManager.dart';
@@ -7,9 +9,10 @@ import 'package:modules/api/OpenIoTHub/SessionApi.dart';
 
 import 'package:modules/model/portService.dart';
 import 'package:modules/pages/mdnsService/commWidgets/info.dart';
+import 'package:modules/utils/utils.dart';
 import 'package:openiothub_grpc_api/pb/service.pb.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO 配置保存，UUID生成
 class Gateway extends StatefulWidget {
   Gateway({Key key, this.serviceInfo}) : super(key: key);
 
@@ -21,37 +24,63 @@ class Gateway extends StatefulWidget {
 }
 
 class GatewayState extends State<Gateway> {
+  static final String GATEWAY_CONFIG_KEY = "gateway_config";
+  static Map<String, dynamic> gateway_config = {
+    "ServerHost" : "guonei.nat-cloud.com",
+    "LoginKey" : "HLLdsa544&*S",
+    "ConnectionType" : "tcp",
+    "LastId" : getOneUUID(),
+    "TcpPort" : "34320",
+    "KcpPort" : "34320",
+    "UdpApiPort" : "34321",
+    "KcpApiPort" : "34322",
+    "TlsPort" : "34321",
+    "GrpcPort" : "34322"
+  };
+
+  @override
+  Future<void> initState() async {
+    super.initState();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey(GATEWAY_CONFIG_KEY)){
+      String device_cname = await prefs.getString(GATEWAY_CONFIG_KEY);
+      setState(() {
+        gateway_config = jsonDecode(device_cname);
+      });
+    }
+  }
+
 //  string ServerHost = 1;
   TextEditingController _ServerHost_controller =
       TextEditingController.fromValue(
-          TextEditingValue(text: "guonei.nat-cloud.com"));
+          TextEditingValue(text: gateway_config["ServerHost"]));
 //  string LoginKey = 2;
   TextEditingController _LoginKey_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "HLLdsa544&*S"));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["LoginKey"]));
 //  string ConnectionType = 3;
   TextEditingController _ConnectionType_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "tcp"));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["ConnectionType"]));
 //  string LastId = 4;
   TextEditingController _LastId_controller =
-      TextEditingController.fromValue(TextEditingValue(text: ""));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["LastId"]));
 //  int64 TcpPort = 5;
   TextEditingController _TcpPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "34320"));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["TcpPort"]));
 //  int64 KcpPort = 6;
   TextEditingController _KcpPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "34320"));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["KcpPort"]));
 //  int64 UdpApiPort = 7;
   TextEditingController _UdpApiPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "34321"));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["UdpApiPort"]));
 //  int64 KcpApiPort = 8;
   TextEditingController _KcpApiPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "34322"));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["KcpApiPort"]));
 //  int64 TlsPort = 9;
   TextEditingController _TlsPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "34321"));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["TlsPort"]));
 //  int64 GrpcPort = 10;
   TextEditingController _GrpcPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: "34322"));
+      TextEditingController.fromValue(TextEditingValue(text: gateway_config["GrpcPort"]));
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +271,7 @@ class GatewayState extends State<Gateway> {
                       )
                     ]));
       }
+      _saveServerInfo(serverInfo);
     } catch (exception) {
       showDialog(
           context: context,
@@ -341,5 +371,22 @@ class GatewayState extends State<Gateway> {
         },
       ),
     );
+  }
+
+  _saveServerInfo(ServerInfo serverInfo) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> gateway_config = {
+      "ServerHost" : serverInfo.serverHost,
+      "LoginKey" : serverInfo.loginKey,
+      "ConnectionType" : serverInfo.connectionType,
+      "LastId" : serverInfo.lastId,
+      "TcpPort" : serverInfo.tcpPort,
+      "KcpPort" : serverInfo.kcpPort,
+      "UdpApiPort" : serverInfo.udpApiPort,
+      "KcpApiPort" : serverInfo.kcpApiPort,
+      "TlsPort" : serverInfo.tlsPort,
+      "GrpcPort" : serverInfo.grpcPort
+    };
+    prefs.setString(GATEWAY_CONFIG_KEY, jsonEncode(gateway_config));
   }
 }

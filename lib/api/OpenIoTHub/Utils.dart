@@ -10,12 +10,12 @@ class UtilApi {
     final allconfig = await getAllConfig();
     print("getAllConfig:$allconfig");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(Constants.GO_AAR_CONFIG, allconfig);
+    await prefs.setString(Constants.OPENIOTHUB_GO_AAR_CONFIG_KEY, allconfig);
   }
 
   static Future<void> loadAllConfig() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String allconfig = await prefs.getString(Constants.GO_AAR_CONFIG);
+    String allconfig = await prefs.getString(Constants.OPENIOTHUB_GO_AAR_CONFIG_KEY);
     print("loadAllConfig:$allconfig");
     setAllConfig(allconfig);
   }
