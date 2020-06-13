@@ -26,23 +26,23 @@ class Gateway extends StatefulWidget {
 class GatewayState extends State<Gateway> {
   static final String GATEWAY_CONFIG_KEY = "gateway_config";
   static Map<String, dynamic> gateway_config = {
-    "ServerHost" : "guonei.nat-cloud.com",
-    "LoginKey" : "HLLdsa544&*S",
-    "ConnectionType" : "tcp",
-    "LastId" : getOneUUID(),
-    "TcpPort" : "34320",
-    "KcpPort" : "34320",
-    "UdpApiPort" : "34321",
-    "KcpApiPort" : "34322",
-    "TlsPort" : "34321",
-    "GrpcPort" : "34322"
+    "ServerHost": "guonei.nat-cloud.com",
+    "LoginKey": "HLLdsa544&*S",
+    "ConnectionType": "tcp",
+    "LastId": getOneUUID(),
+    "TcpPort": "34320",
+    "KcpPort": "34320",
+    "UdpApiPort": "34321",
+    "KcpApiPort": "34322",
+    "TlsPort": "34321",
+    "GrpcPort": "34322"
   };
 
   @override
   Future<void> initState() async {
     super.initState();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(prefs.containsKey(GATEWAY_CONFIG_KEY)){
+    if (prefs.containsKey(GATEWAY_CONFIG_KEY)) {
       String device_cname = await prefs.getString(GATEWAY_CONFIG_KEY);
       setState(() {
         gateway_config = jsonDecode(device_cname);
@@ -53,34 +53,46 @@ class GatewayState extends State<Gateway> {
 //  string ServerHost = 1;
   TextEditingController _ServerHost_controller =
       TextEditingController.fromValue(
-          TextEditingValue(text: gateway_config["ServerHost"]));
+          TextEditingValue(text: gateway_config["ServerHost"].toString()));
+
 //  string LoginKey = 2;
-  TextEditingController _LoginKey_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["LoginKey"]));
+  TextEditingController _LoginKey_controller = TextEditingController.fromValue(
+      TextEditingValue(text: gateway_config["LoginKey"].toString()));
+
 //  string ConnectionType = 3;
   TextEditingController _ConnectionType_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["ConnectionType"]));
+      TextEditingController.fromValue(
+          TextEditingValue(text: gateway_config["ConnectionType"].toString()));
+
 //  string LastId = 4;
-  TextEditingController _LastId_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["LastId"]));
+  TextEditingController _LastId_controller = TextEditingController.fromValue(
+      TextEditingValue(text: gateway_config["LastId"].toString()));
+
 //  int64 TcpPort = 5;
-  TextEditingController _TcpPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["TcpPort"]));
+  TextEditingController _TcpPort_controller = TextEditingController.fromValue(
+      TextEditingValue(text: gateway_config["TcpPort"].toString()));
+
 //  int64 KcpPort = 6;
-  TextEditingController _KcpPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["KcpPort"]));
+  TextEditingController _KcpPort_controller = TextEditingController.fromValue(
+      TextEditingValue(text: gateway_config["KcpPort"].toString()));
+
 //  int64 UdpApiPort = 7;
   TextEditingController _UdpApiPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["UdpApiPort"]));
+      TextEditingController.fromValue(
+          TextEditingValue(text: gateway_config["UdpApiPort"].toString()));
+
 //  int64 KcpApiPort = 8;
   TextEditingController _KcpApiPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["KcpApiPort"]));
+      TextEditingController.fromValue(
+          TextEditingValue(text: gateway_config["KcpApiPort"].toString()));
+
 //  int64 TlsPort = 9;
-  TextEditingController _TlsPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["TlsPort"]));
+  TextEditingController _TlsPort_controller = TextEditingController.fromValue(
+      TextEditingValue(text: gateway_config["TlsPort"].toString()));
+
 //  int64 GrpcPort = 10;
-  TextEditingController _GrpcPort_controller =
-      TextEditingController.fromValue(TextEditingValue(text: gateway_config["GrpcPort"]));
+  TextEditingController _GrpcPort_controller = TextEditingController.fromValue(
+      TextEditingValue(text: gateway_config["GrpcPort"].toString()));
 
   @override
   Widget build(BuildContext context) {
@@ -376,16 +388,16 @@ class GatewayState extends State<Gateway> {
   _saveServerInfo(ServerInfo serverInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> gateway_config = {
-      "ServerHost" : serverInfo.serverHost,
-      "LoginKey" : serverInfo.loginKey,
-      "ConnectionType" : serverInfo.connectionType,
-      "LastId" : serverInfo.lastId,
-      "TcpPort" : serverInfo.tcpPort,
-      "KcpPort" : serverInfo.kcpPort,
-      "UdpApiPort" : serverInfo.udpApiPort,
-      "KcpApiPort" : serverInfo.kcpApiPort,
-      "TlsPort" : serverInfo.tlsPort,
-      "GrpcPort" : serverInfo.grpcPort
+      "ServerHost": serverInfo.serverHost,
+      "LoginKey": serverInfo.loginKey,
+      "ConnectionType": serverInfo.connectionType,
+      "LastId": serverInfo.lastId,
+      "TcpPort": serverInfo.tcpPort,
+      "KcpPort": serverInfo.kcpPort,
+      "UdpApiPort": serverInfo.udpApiPort,
+      "KcpApiPort": serverInfo.kcpApiPort,
+      "TlsPort": serverInfo.tlsPort,
+      "GrpcPort": serverInfo.grpcPort
     };
     prefs.setString(GATEWAY_CONFIG_KEY, jsonEncode(gateway_config));
   }
