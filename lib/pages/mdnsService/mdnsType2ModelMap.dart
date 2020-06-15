@@ -17,7 +17,6 @@ class MDNS2ModelsMap {
   static Map<String, PortService> modelsMap = Map.from({
     //    web UI,http使用web方式打开服务的模型
     "_http._tcp": PortService(
-        portConfig: null,
         isLocal: true,
         info: {
           "name": "Http服务",
@@ -34,7 +33,6 @@ class MDNS2ModelsMap {
         port: 80),
     //    web UI,homeassistant使用web方式打开服务的模型
     "_home-assistant._tcp": PortService(
-        portConfig: null,
         isLocal: true,
         info: {
           "name": "HomeAssistant",
@@ -51,7 +49,6 @@ class MDNS2ModelsMap {
         port: 80),
     //    web UI,使用web方式打开服务的模型
     Config.mdnsGatewayService: PortService(
-        portConfig: null,
         isLocal: true,
         info: {
           "name": "网关",
