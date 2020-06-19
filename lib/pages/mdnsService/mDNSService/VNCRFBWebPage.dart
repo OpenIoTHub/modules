@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:modules/constants/Config.dart';
 import 'package:modules/model/portService.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class VNCWebPage extends StatefulWidget {
@@ -21,14 +22,28 @@ class VNCWebPageState extends State<VNCWebPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
+  void initState() {
+    super.initState();
+    var url = "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fip%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0";
+    _launchURL(url);
+  }
+  @override
   Widget build(BuildContext context) {
+    var url = "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fip%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0";
     return Scaffold(
       key: _scaffoldKey,
       body: WebView(
-        initialUrl:
-        "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fip%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0",
+        initialUrl:url,
         javascriptMode : JavascriptMode.unrestricted
       ),
     );
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
   }
 }
