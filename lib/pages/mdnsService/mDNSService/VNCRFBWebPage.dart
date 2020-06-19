@@ -26,7 +26,7 @@ class VNCWebPageState extends State<VNCWebPage> {
       key: _scaffoldKey,
       body: WebView(
         initialUrl:
-        "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fremoteIp%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0",
+        "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fip%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0",
         javascriptMode : JavascriptMode.unrestricted
       ),
     );

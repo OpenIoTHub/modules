@@ -67,7 +67,7 @@ class MDNS2ModelsMap {
     "_rfb._tcp": PortService(
         isLocal: true,
         info: {
-          "name": "HomeAssistant",
+          "name": "VNC RFB远程桌面",
           "model": VNCWebPage.modelName,
           "mac": "mac",
           "id": "id",
