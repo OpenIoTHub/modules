@@ -14,3 +14,4 @@ export './mDNSService/webDAV.dart';
 export './mDNSService/aria2c.dart';
 export './mDNSService/mdnsResponser.dart';
 export './mDNSService/getway.dart';
+export './mDNSService/VNCRFBWebPage.dart';

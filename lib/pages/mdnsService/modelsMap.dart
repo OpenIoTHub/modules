@@ -77,5 +77,11 @@ class ModelsMap {
         serviceInfo: serviceInfo,
       );
     },
+    //    VNC MacOS可测试
+    VNCWebPage.modelName: (PortService serviceInfo) {
+      return VNCWebPage(
+        serviceInfo: serviceInfo,
+      );
+    },
   });
 }
