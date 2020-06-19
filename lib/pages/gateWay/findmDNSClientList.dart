@@ -115,14 +115,16 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
       PortService portService =
           MDNS2ModelsMap.modelsMap[Config.mdnsGatewayService];
       if (service.addresses != null && service.addresses.length > 0) {
-        portService.ip = service.addresses[0];
+        portService.ip = service.addresses[0].contains(":")
+            ? "[${service.addresses[0]}]"
+            : service.addresses[0];
       } else {
         portService.ip = service.hostName;
       }
       portService.port = service.port;
       portService.info["id"] = "${portService.ip}:${portService.port}@local";
       portService.isLocal = true;
-      if (!_ServiceMap.containsKey(portService.info["id"])){
+      if (!_ServiceMap.containsKey(portService.info["id"])) {
         setState(() {
           _ServiceMap[portService.info["id"]] = portService;
         });
