@@ -22,15 +22,15 @@ class PortService {
   PortService copy() {
     PortService portService = PortService();
     portService.info = {
-      "name": info['info']['name'].toString(),
-      "model": info['info']['model'].toString(),
-      "mac": info['info']['mac'].toString(),
-      "id": info['info']['id'].toString(),
-      "author": info['info']['author'].toString(),
-      "email": info['info']['email'].toString(),
-      "home-page": info['info']['home-page'].toString(),
-      "firmware-respository": info['info']['firmware-respository'].toString(),
-      "firmware-version": info['info']['firmware-version'].toString(),
+      "name": info['name'].toString(),
+      "model": info['model'].toString(),
+      "mac": info['mac'].toString(),
+      "id": info['id'].toString(),
+      "author": info['author'].toString(),
+      "email": info['email'].toString(),
+      "home-page": info['home-page'].toString(),
+      "firmware-respository": info['firmware-respository'].toString(),
+      "firmware-version": info['firmware-version'].toString(),
     };
     portService.isLocal = this.isLocal;
     portService.ip = this.ip;
