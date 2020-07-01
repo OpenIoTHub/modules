@@ -112,8 +112,21 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
     print("Resolved: $service");
     try {
       print("service.serviceType:${service.serviceType}");
-      PortService portService =
-          MDNS2ModelsMap.modelsMap[Config.mdnsGatewayService];
+      PortService portService = PortService(
+          isLocal: true,
+          info: {
+            "name": "网关",
+            "model": Gateway.modelName,
+            "mac": "mac",
+            "id": "id",
+            "author": "Farry",
+            "email": "newfarry@126.com",
+            "home-page": "https://github.com/OpenIoTHub",
+            "firmware-respository": "https://github.com/OpenIoTHub/gateway-go",
+            "firmware-version": "version",
+          },
+          ip: "127.0.0.1",
+          port: 80);
       if (service.addresses != null && service.addresses.length > 0) {
         portService.ip = service.addresses[0].contains(":")
             ? "[${service.addresses[0]}]"
