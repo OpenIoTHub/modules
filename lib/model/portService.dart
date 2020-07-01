@@ -1,6 +1,4 @@
-import 'package:http/http.dart' as http;
-import 'package:openiothub_grpc_api/pb/service.pb.dart';
-import 'package:openiothub_grpc_api/pb/service.pbgrpc.dart';
+import 'dart:convert';
 
 class PortService {
 //  基础url，如：http://127.0.0.1:3679,不带根/
@@ -20,21 +18,8 @@ class PortService {
   PortService({this.info, this.isLocal, this.ip, this.port});
 
   PortService copy() {
-    PortService portService = PortService();
-    portService.info = {
-      "name": info['name'].toString(),
-      "model": info['model'].toString(),
-      "mac": info['mac'].toString(),
-      "id": info['id'].toString(),
-      "author": info['author'].toString(),
-      "email": info['email'].toString(),
-      "home-page": info['home-page'].toString(),
-      "firmware-respository": info['firmware-respository'].toString(),
-      "firmware-version": info['firmware-version'].toString(),
-    };
-    portService.isLocal = this.isLocal;
-    portService.ip = this.ip;
-    portService.port = this.port;
+    String jsonStr = jsonEncode(this);
+    return PortService.fromJson(jsonStr);
   }
 
   Map toJson() {
@@ -46,9 +31,10 @@ class PortService {
     return map;
   }
 
-  static PortService fromJson(Map<String, dynamic> map) {
+  static PortService fromJson(String jsonStr) {
+    Map map = jsonDecode(jsonStr);
     PortService portService = PortService();
-    Map<String, String> newinfo = {
+    portService.info = {
       "name": map['info']['name'].toString(),
       "model": map['info']['model'].toString(),
       "mac": map['info']['mac'].toString(),
@@ -59,8 +45,6 @@ class PortService {
       "firmware-respository": map['info']['firmware-respository'].toString(),
       "firmware-version": map['info']['firmware-version'].toString(),
     };
-
-    portService.info = newinfo;
     portService.isLocal = map['isLocal'];
     portService.ip = map['ip'];
     portService.port = map['port'];
