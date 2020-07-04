@@ -52,4 +52,9 @@ class PortService {
     portService.port = map['port'];
     return portService;
   }
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }
