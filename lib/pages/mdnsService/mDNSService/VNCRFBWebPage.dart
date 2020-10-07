@@ -8,8 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class VNCWebPage extends StatefulWidget {
-  VNCWebPage({Key key, this.serviceInfo})
-      : super(key: key);
+  VNCWebPage({Key key, this.serviceInfo}) : super(key: key);
 
   static final String modelName = "com.iotserv.services.vnc";
   final PortService serviceInfo;
@@ -24,18 +23,19 @@ class VNCWebPageState extends State<VNCWebPage> {
   @override
   void initState() {
     super.initState();
-    var url = "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fip%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0";
+    var url =
+        "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fip%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0";
     _launchURL(url);
   }
+
   @override
   Widget build(BuildContext context) {
-    var url = "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fip%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0";
+    var url =
+        "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3fip%3d${widget.serviceInfo.ip}%26port%3d${widget.serviceInfo.port}&encrypt=0";
     return Scaffold(
       key: _scaffoldKey,
-      body: WebView(
-        initialUrl:url,
-        javascriptMode : JavascriptMode.unrestricted
-      ),
+      body:
+          WebView(initialUrl: url, javascriptMode: JavascriptMode.unrestricted),
     );
   }
 

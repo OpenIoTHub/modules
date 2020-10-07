@@ -1,6 +1,7 @@
 import 'package:modules/constants/Config.dart';
 import 'package:modules/model/portService.dart';
 import './components.dart';
+
 //兼容的mdns类型，最终的落地点都在ModelsMap里
 class MDNS2ModelsMap {
   final Map<String, String> baseInfo = {
@@ -42,7 +43,8 @@ class MDNS2ModelsMap {
           "author": "Farry",
           "email": "newfarry@126.com",
           "home-page": "https://www.home-assistant.io",
-          "firmware-respository": "https://github.com/home-assistant/home-assistant",
+          "firmware-respository":
+              "https://github.com/home-assistant/home-assistant",
           "firmware-version": "version",
         },
         ip: "127.0.0.1",

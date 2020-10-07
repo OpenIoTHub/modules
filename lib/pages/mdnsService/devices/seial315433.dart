@@ -148,7 +148,8 @@ class _Serial315433PageState extends State<Serial315433Page> {
   }
 
   _clickBotton(String cmd) async {
-    String url = "http://${widget.device.ip}:${widget.device.port}/botton?status=$cmd";
+    String url =
+        "http://${widget.device.ip}:${widget.device.port}/botton?status=$cmd";
     http.Response response;
     try {
       response = await http.get(url).timeout(const Duration(seconds: 2));
@@ -167,7 +168,8 @@ class _Serial315433PageState extends State<Serial315433Page> {
                 content: Container(
                     height: 150,
                     child: UploadOTAPage(
-                      url: "http://${widget.device.ip}:${widget.device.port}/update",
+                      url:
+                          "http://${widget.device.ip}:${widget.device.port}/update",
                     )),
                 actions: <Widget>[
                   FlatButton(

@@ -30,27 +30,31 @@ class _WebDAVPageState extends State<WebDAVPage> {
   @override
   Widget build(BuildContext context) {
     final tiles = listFile.map(
-          (pair) {
-            return InkWell(
-              onTap: () {
-                if(pair.isDirectory){
-                  pathHistory.add(pair.path);
-                  _ls();
-                }else{
-                  //TODO 文件，打开这个文件
-                  _openWithWeb("http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}" + pair.path);
-                }
-              },
-              child: ListTile(
-                leading: pair.isDirectory?Icon(Icons.folder_open,color: Colors.black):Icon(Icons.insert_drive_file),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(pair.displayName),
-                  ],
-                ),
-              ),
-            );
+      (pair) {
+        return InkWell(
+          onTap: () {
+            if (pair.isDirectory) {
+              pathHistory.add(pair.path);
+              _ls();
+            } else {
+              //TODO 文件，打开这个文件
+              _openWithWeb(
+                  "http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}" +
+                      pair.path);
+            }
+          },
+          child: ListTile(
+            leading: pair.isDirectory
+                ? Icon(Icons.folder_open, color: Colors.black)
+                : Icon(Icons.insert_drive_file),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(pair.displayName),
+              ],
+            ),
+          ),
+        );
       },
     );
 
@@ -59,43 +63,41 @@ class _WebDAVPageState extends State<WebDAVPage> {
       tiles: tiles,
     ).toList();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(pathHistory.last),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(
-                Icons.refresh,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                _ls();
-              }),
-          IconButton(
-              icon: Icon(
-                Icons.info,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                _info();
-              }),
-        ],
-      ),
-      body: ListView(children: divided),
-      bottomNavigationBar: _buildBottomNavigationBar()
-    );
-
+        appBar: AppBar(
+          title: Text(pathHistory.last),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  _ls();
+                }),
+            IconButton(
+                icon: Icon(
+                  Icons.info,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  _info();
+                }),
+          ],
+        ),
+        body: ListView(children: divided),
+        bottomNavigationBar: _buildBottomNavigationBar());
   }
 
   _ls() async {
-    Client webDAV = Client(widget.serviceInfo.ip, "", "", "/", protocol: "http",
-        port: widget.serviceInfo.port);
-    try{
+    Client webDAV = Client(widget.serviceInfo.ip, "", "", "/",
+        protocol: "http", port: widget.serviceInfo.port);
+    try {
       List<FileInfo> listFileRst = await webDAV.ls(pathHistory.last);
       print("listFileRst:$listFileRst");
       setState(() {
         listFile = listFileRst;
       });
-    }catch (e){
+    } catch (e) {
       print(e.toString());
     }
   }
@@ -172,15 +174,14 @@ class _WebDAVPageState extends State<WebDAVPage> {
             )),
       ],
       onTap: (int index) {
-        switch(index){
+        switch (index) {
           case 0:
-            if(pathHistory.length > 1){
-               pathHistory.removeLast();
-               _ls();
+            if (pathHistory.length > 1) {
+              pathHistory.removeLast();
+              _ls();
             }
         }
       },
     );
   }
-
 }

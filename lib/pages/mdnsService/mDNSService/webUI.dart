@@ -24,30 +24,30 @@ class _WebPageState extends State<WebPage> {
 //    解决退出没有断连的问题
     return Scaffold(
         appBar: new AppBar(title: new Text("网页浏览器"), actions: <Widget>[
-        IconButton(
-            icon: Icon(
-              Icons.info,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _info();
-            }),
-        IconButton(
-            icon: Icon(
-              Icons.open_in_browser,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _launchURL("http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}");
-            })
+          IconButton(
+              icon: Icon(
+                Icons.info,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                _info();
+              }),
+          IconButton(
+              icon: Icon(
+                Icons.open_in_browser,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                _launchURL(
+                    "http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}");
+              })
         ]),
         body: Builder(builder: (BuildContext context) {
           return WebView(
-              initialUrl: "http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}",
-              javascriptMode : JavascriptMode.unrestricted
-          );
+              initialUrl:
+                  "http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}",
+              javascriptMode: JavascriptMode.unrestricted);
         }));
-
   }
 
   _info() async {
@@ -67,10 +67,10 @@ class _WebPageState extends State<WebPage> {
   @override
   void initState() {
     super.initState();
-    if(Platform.isIOS){
+    if (Platform.isIOS) {
       Navigator.of(context).pop();
       _launchURL('http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}');
-    }else{
+    } else {
       _launchURL('http://${widget.serviceInfo.ip}:${widget.serviceInfo.port}');
     }
   }
@@ -83,5 +83,4 @@ class _WebPageState extends State<WebPage> {
       print('Could not launch $url');
     }
   }
-
 }

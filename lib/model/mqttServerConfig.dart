@@ -7,6 +7,7 @@ class MqttServerConfig {
   int port;
   String username;
   String password;
+
   MqttServerConfig({this.host, this.port, this.username, this.password});
 
   Map toJson() {

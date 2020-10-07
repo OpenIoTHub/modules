@@ -24,23 +24,25 @@ class _MDNSResponserPageState extends State<MDNSResponserPage> {
   @override
   Widget build(BuildContext context) {
     final tiles = listFile.map(
-          (pair) {
-            return InkWell(
-              onTap: () {
-                if(pair.isDirectory){
-                  pathHistory.add(pair.path);
-                }
-              },
-              child: ListTile(
-                leading: pair.isDirectory?Icon(Icons.folder_open,color:Colors.black):Icon(Icons.insert_drive_file),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(pair.displayName),
-                  ],
-                ),
-              ),
-            );
+      (pair) {
+        return InkWell(
+          onTap: () {
+            if (pair.isDirectory) {
+              pathHistory.add(pair.path);
+            }
+          },
+          child: ListTile(
+            leading: pair.isDirectory
+                ? Icon(Icons.folder_open, color: Colors.black)
+                : Icon(Icons.insert_drive_file),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(pair.displayName),
+              ],
+            ),
+          ),
+        );
       },
     );
 
@@ -57,9 +59,7 @@ class _MDNSResponserPageState extends State<MDNSResponserPage> {
                 Icons.refresh,
                 color: Colors.white,
               ),
-              onPressed: () {
-
-              }),
+              onPressed: () {}),
           IconButton(
               icon: Icon(
                 Icons.info,
@@ -72,7 +72,6 @@ class _MDNSResponserPageState extends State<MDNSResponserPage> {
       ),
       body: ListView(children: divided),
     );
-
   }
 
   _info() async {
@@ -87,5 +86,4 @@ class _MDNSResponserPageState extends State<MDNSResponserPage> {
       ),
     );
   }
-
 }

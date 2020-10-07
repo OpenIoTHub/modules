@@ -11,38 +11,48 @@ class HttpManager {
 //  rpc CreateOneHTTP (HTTPConfig) returns (HTTPConfig) {}
   static Future<HTTPConfig> CreateOneHTTP(HTTPConfig httpConfig) async {
     final channel = await Channel.getServerChannel(httpConfig.runId);
-    SessionConfig sessionConfig = await SessionApi.getOneSession(httpConfig.runId);
-    final stub = server.HttpManagerClient(channel, options: CallOptions(metadata: {'jwt': sessionConfig.token}));
+    SessionConfig sessionConfig =
+        await SessionApi.getOneSession(httpConfig.runId);
+    final stub = server.HttpManagerClient(channel,
+        options: CallOptions(metadata: {'jwt': sessionConfig.token}));
 
     HTTPConfig httpConfigResponse = await stub.createOneHTTP(httpConfig);
     print('httpConfigResponse: ${httpConfigResponse}');
     channel.shutdown();
     return httpConfigResponse;
   }
+
 //  rpc DeleteOneHTTP (HTTPConfig) returns (Empty) {}
   static Future<void> DeleteOneHTTP(HTTPConfig httpConfig) async {
     final channel = await Channel.getServerChannel(httpConfig.runId);
-    SessionConfig sessionConfig = await SessionApi.getOneSession(httpConfig.runId);
-    final stub = server.HttpManagerClient(channel, options: CallOptions(metadata: {'jwt': sessionConfig.token}));
+    SessionConfig sessionConfig =
+        await SessionApi.getOneSession(httpConfig.runId);
+    final stub = server.HttpManagerClient(channel,
+        options: CallOptions(metadata: {'jwt': sessionConfig.token}));
 
     await stub.deleteOneHTTP(httpConfig);
     channel.shutdown();
   }
+
 //  rpc GetOneHTTP (HTTPConfig) returns (HTTPConfig) {}
   static Future<HTTPConfig> GetOneHTTP(HTTPConfig httpConfig) async {
     final channel = await Channel.getServerChannel(httpConfig.runId);
-    SessionConfig sessionConfig = await SessionApi.getOneSession(httpConfig.runId);
-    final stub = server.HttpManagerClient(channel, options: CallOptions(metadata: {'jwt': sessionConfig.token}));
+    SessionConfig sessionConfig =
+        await SessionApi.getOneSession(httpConfig.runId);
+    final stub = server.HttpManagerClient(channel,
+        options: CallOptions(metadata: {'jwt': sessionConfig.token}));
 
     HTTPConfig newHttpConfig = await stub.getOneHTTP(httpConfig);
     channel.shutdown();
     return newHttpConfig;
   }
+
 //  rpc GetAllHTTP (Empty) returns (HTTPList) {}
   static Future<HTTPList> GetAllHTTP(openiothub.Device device) async {
     final channel = await Channel.getServerChannel(device.runId);
     SessionConfig sessionConfig = await SessionApi.getOneSession(device.runId);
-    final stub = server.HttpManagerClient(channel, options: CallOptions(metadata: {'jwt': sessionConfig.token}));
+    final stub = server.HttpManagerClient(channel,
+        options: CallOptions(metadata: {'jwt': sessionConfig.token}));
 
     server.Device sdevice = server.Device();
     sdevice.runId = device.runId;

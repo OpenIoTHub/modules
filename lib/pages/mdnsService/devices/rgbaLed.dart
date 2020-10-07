@@ -265,7 +265,8 @@ class _RGBALedPageState extends State<RGBALedPage> {
                 content: Container(
                     height: 150,
                     child: UploadOTAPage(
-                      url: "http://${widget.device.ip}:${widget.device.port}/update",
+                      url:
+                          "http://${widget.device.ip}:${widget.device.port}/update",
                     )),
                 actions: <Widget>[
                   FlatButton(
@@ -331,7 +332,8 @@ class _RGBALedPageState extends State<RGBALedPage> {
   }
 
   _setMode(int newValue) async {
-    String url = "http://${widget.device.ip}:${widget.device.port}/set?m=${newValue.toString()}";
+    String url =
+        "http://${widget.device.ip}:${widget.device.port}/set?m=${newValue.toString()}";
     try {
       await http.get(url).timeout(const Duration(seconds: 2));
       setState(() {
@@ -344,7 +346,8 @@ class _RGBALedPageState extends State<RGBALedPage> {
   }
 
   _setSpeed(String cmd) async {
-    String url = "http://${widget.device.ip}:${widget.device.port}/set?s=${cmd}";
+    String url =
+        "http://${widget.device.ip}:${widget.device.port}/set?s=${cmd}";
     try {
       await http.get(url).timeout(const Duration(seconds: 2));
     } catch (e) {

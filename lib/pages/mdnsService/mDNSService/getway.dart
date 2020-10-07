@@ -11,7 +11,7 @@ import 'package:modules/model/portService.dart';
 import 'package:modules/pages/mdnsService/commWidgets/info.dart';
 import 'package:modules/utils/utils.dart';
 import 'package:openiothub_grpc_api/pb/service.pb.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class Gateway extends StatefulWidget {
   Gateway({Key key, this.serviceInfo}) : super(key: key);
@@ -39,15 +39,11 @@ class GatewayState extends State<Gateway> {
   };
 
   @override
-  Future<void> initState() async {
+  Future<void> initState() {
     super.initState();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey(GATEWAY_CONFIG_KEY)) {
-      String device_cname = await prefs.getString(GATEWAY_CONFIG_KEY);
-      setState(() {
-        gateway_config = jsonDecode(device_cname);
-      });
-    }
+    setState(() {
+      _LastId_controller.text = widget.serviceInfo.info["id"];
+    });
   }
 
 //  string ServerHost = 1;
@@ -66,7 +62,7 @@ class GatewayState extends State<Gateway> {
 
 //  string LastId = 4;
   TextEditingController _LastId_controller = TextEditingController.fromValue(
-      TextEditingValue(text: gateway_config["LastId"].toString()));
+      TextEditingValue(text: gateway_config["LastId"]));
 
 //  int64 TcpPort = 5;
   TextEditingController _TcpPort_controller = TextEditingController.fromValue(
@@ -283,7 +279,6 @@ class GatewayState extends State<Gateway> {
                       )
                     ]));
       }
-      _saveServerInfo(serverInfo);
     } catch (exception) {
       showDialog(
           context: context,
@@ -383,22 +378,5 @@ class GatewayState extends State<Gateway> {
         },
       ),
     );
-  }
-
-  _saveServerInfo(ServerInfo serverInfo) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic> gateway_config = {
-      "ServerHost": serverInfo.serverHost,
-      "LoginKey": serverInfo.loginKey,
-      "ConnectionType": serverInfo.connectionType,
-      "LastId": serverInfo.lastId,
-      "TcpPort": serverInfo.tcpPort,
-      "KcpPort": serverInfo.kcpPort,
-      "UdpApiPort": serverInfo.udpApiPort,
-      "KcpApiPort": serverInfo.kcpApiPort,
-      "TlsPort": serverInfo.tlsPort,
-      "GrpcPort": serverInfo.grpcPort
-    };
-    prefs.setString(GATEWAY_CONFIG_KEY, jsonEncode(gateway_config));
   }
 }

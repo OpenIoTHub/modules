@@ -36,8 +36,8 @@ class SSHWebPageState extends State<SSHWebPage> {
       ),
       body: WebView(
         initialUrl:
-        "http://${Config.webgRpcIp}:${Config.webStaticPort}/web/open/ssh/index.html",
-        javascriptMode : JavascriptMode.unrestricted,
+            "http://${Config.webgRpcIp}:${Config.webStaticPort}/web/open/ssh/index.html",
+        javascriptMode: JavascriptMode.unrestricted,
         onWebViewCreated: (WebViewController webViewController) {
           String jsCode =
               "window.localStorage.setItem(\'runId\', \'${widget.runId}\');window.localStorage.setItem(\'remoteIp\', \'${widget.remoteIp}\');window.localStorage.setItem(\'remotePort\', \'${widget.remotePort}\');window.localStorage.setItem(\'userName\', \'${widget.userName}\');window.localStorage.setItem(\'passWord\', \'${widget.passWord}\');location.reload();";

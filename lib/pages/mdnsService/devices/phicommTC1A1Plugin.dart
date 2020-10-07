@@ -55,8 +55,7 @@ class _PhicommTC1A1PluginPageState extends State<PhicommTC1A1PluginPage> {
     power: "功率",
   });
 
-
-  List<String> _switchKeyList = [slot0,slot1,slot2,slot3,slot4,slot5];
+  List<String> _switchKeyList = [slot0, slot1, slot2, slot3, slot4, slot5];
   List<String> _valueKeyList = [power];
 
   @override
@@ -68,7 +67,7 @@ class _PhicommTC1A1PluginPageState extends State<PhicommTC1A1PluginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List _result  =[];
+    final List _result = [];
     _result.addAll(_switchKeyList);
     _result.addAll(_valueKeyList);
     final tiles = _result.map(
@@ -186,9 +185,9 @@ class _PhicommTC1A1PluginPageState extends State<PhicommTC1A1PluginPage> {
     );
   }
 
-
   _changeSwitchStatus() async {
-    String url = "http://${widget.device.ip}:${widget.device.port}/switch?$slot0=${_status[slot0]?1:0}&$slot1=${_status[slot1]?1:0}&$slot2=${_status[slot2]?1:0}&$slot3=${_status[slot3]?1:0}&$slot4=${_status[slot4]?1:0}&$slot5=${_status[slot5]?1:0}";
+    String url =
+        "http://${widget.device.ip}:${widget.device.port}/switch?$slot0=${_status[slot0] ? 1 : 0}&$slot1=${_status[slot1] ? 1 : 0}&$slot2=${_status[slot2] ? 1 : 0}&$slot3=${_status[slot3] ? 1 : 0}&$slot4=${_status[slot4] ? 1 : 0}&$slot5=${_status[slot5] ? 1 : 0}";
     http.Response response;
     try {
       response = await http.get(url).timeout(const Duration(seconds: 2));

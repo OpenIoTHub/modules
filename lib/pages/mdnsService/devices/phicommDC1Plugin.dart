@@ -292,7 +292,8 @@ class _PhicommDC1PluginPageState extends State<PhicommDC1PluginPage> {
                 content: Container(
                     height: 150,
                     child: UploadOTAPage(
-                      url: "http://${widget.device.ip}:${widget.device.port}/update",
+                      url:
+                          "http://${widget.device.ip}:${widget.device.port}/update",
                     )),
                 actions: <Widget>[
                   FlatButton(

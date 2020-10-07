@@ -11,10 +11,13 @@ class AppInfoPage extends StatefulWidget {
 class _AppInfoPageState extends State<AppInfoPage> {
   //APP名称
   String appName;
+
   //包名
   String packageName;
+
   //版本名
   String version;
+
   //版本号
   String buildNumber;
 

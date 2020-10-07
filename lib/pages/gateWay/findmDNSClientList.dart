@@ -3,9 +3,8 @@ import 'package:modules/constants/Config.dart';
 import 'package:modules/constants/Constants.dart';
 import 'package:modules/model/portService.dart';
 import 'package:modules/pages/mdnsService/components.dart';
-import 'package:modules/pages/mdnsService/mdnsType2ModelMap.dart';
 
-import 'package:mdns_plugin/mdns_plugin.dart' as mdns_plugin;
+import 'package:multicast_dns/multicast_dns.dart';
 
 class FindmDNSClientListPage extends StatefulWidget {
   FindmDNSClientListPage({Key key}) : super(key: key);
@@ -14,24 +13,22 @@ class FindmDNSClientListPage extends StatefulWidget {
   _FindmDNSClientListPageState createState() => _FindmDNSClientListPageState();
 }
 
-class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
-    implements mdns_plugin.MDNSPluginDelegate {
+class _FindmDNSClientListPageState extends State<FindmDNSClientListPage> {
   static const double IMAGE_ICON_WIDTH = 30.0;
 
   Map<String, PortService> _ServiceMap = {};
-  mdns_plugin.MDNSPlugin _mdns;
+  final MDnsClient _mdns = MDnsClient();
 
   @override
   void initState() {
     super.initState();
-    _mdns = mdns_plugin.MDNSPlugin(this);
     _findClientListBymDNS();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _mdns.stopDiscovery();
+    _mdns.stop();
   }
 
   @override
@@ -90,80 +87,81 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
   }
 
   void _findClientListBymDNS() async {
+    print("====_findClientListBymDNS");
+    await _mdns.stop();
+    await _mdns.start();
     _ServiceMap.clear();
-    _mdns.startDiscovery(Config.mdnsGatewayService, enableUpdating: true);
-  }
-
-  void onDiscoveryStarted() {
-    print("Discovery started");
-  }
-
-  void onDiscoveryStopped() {
-    print("Discovery stopped");
-  }
-
-  bool onServiceFound(mdns_plugin.MDNSService service) {
-    print("Found: $service");
-    // Always returns true which begins service resolution
-    return true;
-  }
-
-  void onServiceResolved(mdns_plugin.MDNSService service) {
-    print("Resolved: $service");
-    try {
-      print("service.serviceType:${service.serviceType}");
-      PortService portService = PortService(
-          isLocal: true,
-          info: {
-            "name": "网关",
-            "model": Gateway.modelName,
-            "mac": "mac",
-            "id": "id",
-            "author": "Farry",
-            "email": "newfarry@126.com",
-            "home-page": "https://github.com/OpenIoTHub",
-            "firmware-respository": "https://github.com/OpenIoTHub/gateway-go",
-            "firmware-version": "version",
-          },
-          ip: "127.0.0.1",
-          port: 80);
-      if (service.addresses != null && service.addresses.length > 0) {
-        portService.ip = service.addresses[0].contains(":")
-            ? "[${service.addresses[0]}]"
-            : service.addresses[0];
-      } else {
-        portService.ip = service.hostName;
-      }
-      portService.port = service.port;
-      portService.info["id"] = "${portService.ip}:${portService.port}@local";
-      portService.isLocal = true;
-      if (!_ServiceMap.containsKey(portService.info["id"])) {
-        setState(() {
-          _ServiceMap[portService.info["id"]] = portService;
+    // try {
+    await for (PtrResourceRecord ptr in _mdns.lookup<PtrResourceRecord>(
+        ResourceRecordQuery.serverPointer(Config.mdnsGatewayService))) {
+      await for (SrvResourceRecord srv in _mdns.lookup<SrvResourceRecord>(
+          ResourceRecordQuery.service(ptr.domainName))) {
+        print(srv);
+        PortService _portService = PortService(
+            isLocal: true,
+            info: {
+              "name": "网关",
+              "model": Gateway.modelName,
+              "mac": "mac",
+              "id": "id",
+              "author": "Farry",
+              "email": "newfarry@126.com",
+              "home-page": "https://github.com/OpenIoTHub",
+              "firmware-respository":
+                  "https://github.com/OpenIoTHub/gateway-go",
+              "firmware-version": "version",
+            },
+            ip: "127.0.0.1",
+            port: 80);
+        await _mdns
+            .lookup<TxtResourceRecord>(ResourceRecordQuery.text(ptr.domainName))
+            .forEach((TxtResourceRecord text) {
+          List<String> _txts = text.text.split("\n");
+          print(_txts.length);
+          print(_txts);
+          _txts.forEach((String txt) {
+            List<String> _kv = txt.split("=");
+            print("_kv:");
+            print(_kv);
+            _portService.info[_kv.first] = _kv.last;
+            //  TODO value 为空是否需要添加？
+          });
         });
+        await for (IPAddressResourceRecord ip
+            in _mdns.lookup<IPAddressResourceRecord>(
+                ResourceRecordQuery.addressIPv4(srv.target))) {
+          print(ip);
+          print('Service instance found at '
+              '${srv.target}:${srv.port} with ${ip.address}.');
+          _portService.ip = ip.address.address;
+          _portService.port = srv.port;
+          _portService.isLocal = true;
+          break;
+        }
+        print("_portService:");
+        print(_portService);
+        if (!_ServiceMap.containsKey(_portService.info["id"])) {
+          setState(() {
+            _ServiceMap[_portService.info["id"]] = _portService;
+          });
+        }
       }
-    } catch (e) {
-      showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-                  title: Text("从本地获取网关列表失败："),
-                  content: Text("失败原因：$e"),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("确认"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ]));
     }
-  }
-
-  void onServiceUpdated(mdns_plugin.MDNSService service) {
-    print("Updated: $service");
-  }
-
-  void onServiceRemoved(mdns_plugin.MDNSService service) {
-    print("Removed: $service");
+    // } catch (e) {
+    //   showDialog(
+    //       context: context,
+    //       builder: (_) => AlertDialog(
+    //               title: Text("从本地获取网关列表失败："),
+    //               content: Text("失败原因：$e"),
+    //               actions: <Widget>[
+    //                 FlatButton(
+    //                   child: Text("确认"),
+    //                   onPressed: () {
+    //                     Navigator.of(context).pop();
+    //                   },
+    //                 )
+    //               ]));
+    // }
+    await _mdns.stop();
   }
 }

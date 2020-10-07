@@ -15,10 +15,12 @@ class UtilApi {
 
   static Future<void> loadAllConfig() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String allconfig = await prefs.getString(Constants.OPENIOTHUB_GO_AAR_CONFIG_KEY);
+    String allconfig =
+        await prefs.getString(Constants.OPENIOTHUB_GO_AAR_CONFIG_KEY);
     print("loadAllConfig:$allconfig");
     setAllConfig(allconfig);
   }
+
 //获取本地的所有mdns列表
   static Future<MDNSServiceList> getAllmDNSServiceList() async {
     final channel = await Channel.getOpenIoTHubChannel();
@@ -61,6 +63,7 @@ class UtilApi {
     channel.shutdown();
     return response.value;
   }
+
   //获取本地的指定条件的mdns列表
   static Future<void> setAllConfig(String config) async {
     final channel = await Channel.getOpenIoTHubChannel();
@@ -71,6 +74,7 @@ class UtilApi {
     channel.shutdown();
     return response;
   }
+
   //从Token字符串解析TokenModel
   static Future<TokenModel> getTokenModel(String tokenStr) async {
     final channel = await Channel.getOpenIoTHubChannel();

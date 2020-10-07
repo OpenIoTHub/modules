@@ -24,10 +24,9 @@ class VNCWebPageState extends State<VNCWebPage> {
     return Scaffold(
       key: _scaffoldKey,
       body: WebView(
-        initialUrl:
-        "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3frunId%3d${widget.runId}%26remoteIp%3d${widget.remoteIp}%26remotePort%3d${widget.remotePort}&encrypt=0",
-        javascriptMode : JavascriptMode.unrestricted
-      ),
+          initialUrl:
+              "http://${Config.webStaticIp}:${Config.webStaticPort}/web/open/vnc/index.html?host=${Config.webgRpcIp}&port=${Config.webRestfulPort}&path=proxy%2fws%2fconnect%2fwebsockify%3frunId%3d${widget.runId}%26remoteIp%3d${widget.remoteIp}%26remotePort%3d${widget.remotePort}&encrypt=0",
+          javascriptMode: JavascriptMode.unrestricted),
     );
   }
 }

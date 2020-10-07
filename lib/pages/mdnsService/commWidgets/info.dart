@@ -15,7 +15,7 @@ class InfoPage extends StatelessWidget {
     //设备信息
     final List _result = [];
     _result.add("设备名称:${portService.info["name"]}");
-    _result.add("设备型号:${portService.info["model"].replaceAll("#",".")}");
+    _result.add("设备型号:${portService.info["model"].replaceAll("#", ".")}");
     _result.add("物理地址:${portService.info["mac"]}");
     _result.add("id:${portService.info["id"]}");
     _result.add("固件作者:${portService.info["author"]}");
@@ -50,39 +50,40 @@ class InfoPage extends StatelessWidget {
               ),
               onPressed: () {
                 TextEditingController _new_name_controller =
-                TextEditingController.fromValue(
-                    TextEditingValue(text: portService.info["name"]));
+                    TextEditingController.fromValue(
+                        TextEditingValue(text: portService.info["name"]));
                 showDialog(
                     context: context,
                     builder: (_) => AlertDialog(
-                        title: Text("修改名称："),
-                        content: ListView(
-                          children: <Widget>[
-                            TextFormField(
-                              controller: _new_name_controller,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10.0),
-                                labelText: '请输入新的名称',
-                                helperText: '名称',
+                            title: Text("修改名称："),
+                            content: ListView(
+                              children: <Widget>[
+                                TextFormField(
+                                  controller: _new_name_controller,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(10.0),
+                                    labelText: '请输入新的名称',
+                                    helperText: '名称',
+                                  ),
+                                )
+                              ],
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("取消"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
                               ),
-                            )
-                          ],
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text("取消"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          FlatButton(
-                            child: Text("修改"),
-                            onPressed: () async {
-                              await rename(portService.info["id"], _new_name_controller.text);
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ])).then((restlt) {
+                              FlatButton(
+                                child: Text("修改"),
+                                onPressed: () async {
+                                  await rename(portService.info["id"],
+                                      _new_name_controller.text);
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ])).then((restlt) {
                   Navigator.of(context).pop();
                 });
               }),
@@ -95,13 +96,14 @@ class InfoPage extends StatelessWidget {
   rename(String id, name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> device_cname_map = Map<String, dynamic>();
-    if(prefs.containsKey(Constants.DEVICE_CNAME_KEY)){
+    if (prefs.containsKey(Constants.DEVICE_CNAME_KEY)) {
       String device_cname = await prefs.getString(Constants.DEVICE_CNAME_KEY);
       device_cname_map = jsonDecode(device_cname);
       device_cname_map[id] = name;
-    }else{
+    } else {
       device_cname_map[id] = name;
     }
-    await prefs.setString(Constants.DEVICE_CNAME_KEY, jsonEncode(device_cname_map));
+    await prefs.setString(
+        Constants.DEVICE_CNAME_KEY, jsonEncode(device_cname_map));
   }
 }

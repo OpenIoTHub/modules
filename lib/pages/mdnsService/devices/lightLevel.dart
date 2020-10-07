@@ -218,7 +218,8 @@ class _LightLevelPageState extends State<LightLevelPage> {
                 content: Container(
                     height: 150,
                     child: UploadOTAPage(
-                      url: "http://${widget.device.ip}:${widget.device.port}/update",
+                      url:
+                          "http://${widget.device.ip}:${widget.device.port}/update",
                     )),
                 actions: <Widget>[
                   FlatButton(
