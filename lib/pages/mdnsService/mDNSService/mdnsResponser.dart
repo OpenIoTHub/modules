@@ -1,6 +1,5 @@
 //这个模型是用来使用WebDAV的文件服务器来操作文件的
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:modules/model/portService.dart';
 import 'package:modules/pages/mdnsService/commWidgets/info.dart';
 import 'package:webdav/webdav.dart';
