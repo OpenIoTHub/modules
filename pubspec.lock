@@ -56,7 +56,7 @@ packages:
       name: connectivity
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.9+3"
+    version: "0.4.9+5"
   connectivity_for_web:
     dependency: transitive
     description:
@@ -384,7 +384,7 @@ packages:
       name: shared_preferences
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.5.12"
+    version: "0.5.12+2"
   shared_preferences_linux:
     dependency: transitive
     description:
@@ -425,13 +425,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  smartconfig:
-    dependency: "direct main"
-    description:
-      name: smartconfig
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.1"
   source_span:
     dependency: transitive
     description:
@@ -487,7 +480,7 @@ packages:
       name: url_launcher
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.7.2"
+    version: "5.7.5"
   url_launcher_linux:
     dependency: transitive
     description:

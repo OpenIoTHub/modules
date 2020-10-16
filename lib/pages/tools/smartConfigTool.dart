@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:smartconfig/smartconfig.dart';
 import 'package:flutter_oneshot/flutter_oneshot.dart';
 import 'package:flutter_easylink/flutter_easylink.dart';
 import 'package:flutter_smartlink/flutter_smartlink.dart';
@@ -184,18 +183,6 @@ class _SmartConfigToolState extends State<SmartConfigTool> {
                                 return;
                               }
                             });
-                            await _configureEspTouch().then((v) {
-                              _checkResult();
-                              if (v) {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                                if (widget.needCallBack) {
-                                  Navigator.of(context).pop();
-                                }
-                                return;
-                              }
-                            });
                             await _configureOneShot().then((v) {
                               _checkResult();
                             });
@@ -272,27 +259,6 @@ class _SmartConfigToolState extends State<SmartConfigTool> {
 //      提示失败！
       return false;
     }
-  }
-
-  Future<bool> _configureEspTouch() async {
-    String output = "Unknown";
-    try {
-      Map<String, dynamic> v =
-          await Smartconfig.start(_ssid, _bssid, _password);
-      setState(() {
-        _msg =
-            "附近的ESPTouch设备配网任务完成\n${v.toString()}，\n当前剩下：${_smartConfigRemainNumber - 1}";
-      });
-      if (v != null) {
-        return true;
-      }
-    } on PlatformException catch (e) {
-      output = "Failed to configure: '${e.message}'.";
-      setState(() {
-        _msg = output;
-      });
-    }
-    return false;
   }
 
   Future<void> _configureOneShot() async {

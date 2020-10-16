@@ -37,7 +37,7 @@ dependencies:
   event_bus: ^1.1.0
   #  配网start
   #  esp配网
-  smartconfig: ^0.0.1
+#  smartconfig: ^0.0.1
   #  w60x的OneShot配网
   flutter_oneshot:
     git: https://github.com/iotdevice/flutter_oneshot
