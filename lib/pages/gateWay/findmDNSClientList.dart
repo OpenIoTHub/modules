@@ -26,7 +26,7 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
   @override
   void initState() {
     super.initState();
-    if(Platform.isAndroid ||Platform.isLinux||Platform.isWindows||Platform.isMacOS){
+    if(!Platform.isIOS){
       _mdns.start();
     }else{
       _mdnsPlg = mdns_plugin.MDNSPlugin(this);
@@ -37,7 +37,7 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
   @override
   void dispose() {
     super.dispose();
-    if(Platform.isAndroid ||Platform.isLinux||Platform.isWindows||Platform.isMacOS) {
+    if(!Platform.isIOS) {
       _mdns.stop();
     }else{
       _mdnsPlg.stopDiscovery();
@@ -101,7 +101,7 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
 
   void _findClientListBymDNS() async {
     print("====_findClientListBymDNS");
-    if (Platform.isAndroid ||Platform.isLinux||Platform.isWindows||Platform.isMacOS) {
+    if (!Platform.isIOS) {
       _ServiceMap.clear();
       // try {
       await for (PtrResourceRecord ptr in _mdns.lookup<PtrResourceRecord>(
