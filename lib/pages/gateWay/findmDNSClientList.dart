@@ -105,7 +105,7 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
       _ServiceMap.clear();
       // try {
       await for (PtrResourceRecord ptr in _mdns.lookup<PtrResourceRecord>(
-          ResourceRecordQuery.serverPointer(Config.mdnsGatewayService.replaceAll(".local", "")))) {
+          ResourceRecordQuery.serverPointer(Config.mdnsGatewayService + ".local"))) {
         await for (SrvResourceRecord srv in _mdns.lookup<SrvResourceRecord>(
             ResourceRecordQuery.service(ptr.domainName))) {
           print(srv);
@@ -161,7 +161,7 @@ class _FindmDNSClientListPageState extends State<FindmDNSClientListPage>
         }
       }
     } else {
-      _mdnsPlg.startDiscovery(Config.mdnsGatewayService.replaceAll(".local", ""), enableUpdating: true);
+      _mdnsPlg.startDiscovery(Config.mdnsGatewayService, enableUpdating: true);
     }
     // } catch (e) {
     //   showDialog(
