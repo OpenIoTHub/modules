@@ -87,9 +87,15 @@ class MDNS2ModelsMap {
         port: 80),
   });
 
-  static List<String> getAllmDnsType() {
+  static List<String> getAllmDnsServiceType() {
     List<String> keys = modelsMap.keys.toList();
-    keys.addAll({Config.mdnsIoTDeviceService, Config.mdnsTypeExplorer});
+    keys.addAll({Config.mdnsIoTDeviceService});
+    return keys;
+  }
+
+  static List<String> getAllmDnsType() {
+    List<String> keys = getAllmDnsServiceType();
+    keys.addAll({Config.mdnsTypeExplorer});
     return keys;
   }
 }
