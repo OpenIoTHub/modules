@@ -82,4 +82,10 @@ class MDNS2ModelsMap {
         ip: "127.0.0.1",
         port: 80),
   });
+
+  static List<String> getAllmDnsType() {
+    List<String> keys = modelsMap.keys.toList();
+    keys.addAll({Config.mdnsIoTDeviceService, Config.mdnsGatewayService});
+    return keys;
+  }
 }
