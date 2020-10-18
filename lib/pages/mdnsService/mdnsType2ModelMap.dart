@@ -15,7 +15,27 @@ class MDNS2ModelsMap {
     "firmware-respository": "https://github.com/iotdevice/*",
     "firmware-version": "version",
   };
+  //从ios14开始mdns发现的类型需要在Info.plist注册才可以被发现
+  //	https://github.com/OpenIoTHub/OpenIoTHub/blob/41b1869951691a9084c66501b3d267daa4216577/ios/Runner/Info.plist#L38
+  //请新模型的开发者同步在上述OpenIoTHub中的Info.plist添加新的mdns类型，如：_http._tcp
+  //TODO：后续将会自动添加到Info.plist
   static Map<String, PortService> modelsMap = Map.from({
+    //    OpenIoTHub网关模型
+    Config.mdnsGatewayService: PortService(
+        isLocal: true,
+        info: {
+          "name": "网关",
+          "model": Gateway.modelName,
+          "mac": "mac",
+          "id": "id",
+          "author": "Farry",
+          "email": "newfarry@126.com",
+          "home-page": "https://github.com/OpenIoTHub",
+          "firmware-respository": "https://github.com/OpenIoTHub/gateway-go",
+          "firmware-version": "version",
+        },
+        ip: "127.0.0.1",
+        port: 80),
     //    web UI,http使用web方式打开服务的模型
     "_http._tcp": PortService(
         isLocal: true,
@@ -49,23 +69,7 @@ class MDNS2ModelsMap {
         },
         ip: "127.0.0.1",
         port: 80),
-    //    web UI,使用web方式打开服务的模型
-    Config.mdnsGatewayService: PortService(
-        isLocal: true,
-        info: {
-          "name": "网关",
-          "model": Gateway.modelName,
-          "mac": "mac",
-          "id": "id",
-          "author": "Farry",
-          "email": "newfarry@126.com",
-          "home-page": "https://github.com/OpenIoTHub",
-          "firmware-respository": "https://github.com/OpenIoTHub/gateway-go",
-          "firmware-version": "version",
-        },
-        ip: "127.0.0.1",
-        port: 80),
-    //    web UI,homeassistant使用web方式打开服务的模型
+    //    vnc远程桌面模型
     "_rfb._tcp": PortService(
         isLocal: true,
         info: {
@@ -85,7 +89,7 @@ class MDNS2ModelsMap {
 
   static List<String> getAllmDnsType() {
     List<String> keys = modelsMap.keys.toList();
-    keys.addAll({Config.mdnsIoTDeviceService, Config.mdnsGatewayService});
+    keys.addAll({Config.mdnsIoTDeviceService, Config.mdnsTypeExplorer});
     return keys;
   }
 }
