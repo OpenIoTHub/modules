@@ -3,12 +3,13 @@ import 'package:modules/model/portService.dart';
 import './components.dart';
 
 //兼容的mdns类型，最终的落地点都在ModelsMap里
+//没有的id和mac置空
 class MDNS2ModelsMap {
   final Map<String, String> baseInfo = {
     "name": "OpenIoTHub Entity",
     "model": WebPage.modelName,
-    "mac": "mac",
-    "id": "id",
+    "mac": "",
+    "id": "",
     "author": "Farry",
     "email": "newfarry@126.com",
     "home-page": "https://github.com/iotdevice",
@@ -26,8 +27,8 @@ class MDNS2ModelsMap {
         info: {
           "name": "网关",
           "model": Gateway.modelName,
-          "mac": "mac",
-          "id": "id",
+          "mac": "",
+          "id": "",
           "author": "Farry",
           "email": "newfarry@126.com",
           "home-page": "https://github.com/OpenIoTHub",
@@ -42,8 +43,8 @@ class MDNS2ModelsMap {
         info: {
           "name": "Http服务",
           "model": WebPage.modelName,
-          "mac": "mac",
-          "id": "id",
+          "mac": "",
+          "id": "",
           "author": "Farry",
           "email": "newfarry@126.com",
           "home-page": "https://github.com/OpenIoTHub",
@@ -58,8 +59,8 @@ class MDNS2ModelsMap {
         info: {
           "name": "CGI Http服务",
           "model": WebPage.modelName,
-          "mac": "mac",
-          "id": "id",
+          "mac": "",
+          "id": "",
           "author": "Farry",
           "email": "newfarry@126.com",
           "home-page": "https://github.com/OpenIoTHub",
@@ -74,8 +75,8 @@ class MDNS2ModelsMap {
         info: {
           "name": "HomeAssistant",
           "model": WebPage.modelName,
-          "mac": "mac",
-          "id": "id",
+          "mac": "",
+          "id": "",
           "author": "Farry",
           "email": "newfarry@126.com",
           "home-page": "https://www.home-assistant.io",
@@ -91,8 +92,8 @@ class MDNS2ModelsMap {
         info: {
           "name": "VNC RFB远程桌面",
           "model": VNCWebPage.modelName,
-          "mac": "mac",
-          "id": "id",
+          "mac": "",
+          "id": "",
           "author": "Farry",
           "email": "newfarry@126.com",
           "home-page": "https://github.com/OpenIoTHub",
