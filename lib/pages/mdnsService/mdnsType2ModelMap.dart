@@ -105,8 +105,8 @@ class MDNS2ModelsMap {
   });
 
   static List<String> getAllmDnsServiceType() {
-    List<String> keys = modelsMap.keys.toList();
-    keys.addAll({Config.mdnsIoTDeviceService});
+    List<String> keys = [Config.mdnsIoTDeviceService];
+    keys.addAll(modelsMap.keys.toList());
     return keys;
   }
 
