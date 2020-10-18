@@ -52,6 +52,22 @@ class MDNS2ModelsMap {
         },
         ip: "127.0.0.1",
         port: 80),
+    //    web UI,http使用web方式打开服务的模型
+    "_CGI._tcp": PortService(
+        isLocal: true,
+        info: {
+          "name": "CGI Http服务",
+          "model": WebPage.modelName,
+          "mac": "mac",
+          "id": "id",
+          "author": "Farry",
+          "email": "newfarry@126.com",
+          "home-page": "https://github.com/OpenIoTHub",
+          "firmware-respository": "https://github.com/OpenIoTHub",
+          "firmware-version": "version",
+        },
+        ip: "127.0.0.1",
+        port: 80),
     //    web UI,homeassistant使用web方式打开服务的模型
     "_home-assistant._tcp": PortService(
         isLocal: true,
