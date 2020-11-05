@@ -16,7 +16,7 @@ class MDNS2ModelsMap {
     "firmware-respository": "https://github.com/iotdevice/*",
     "firmware-version": "version",
   };
-  static final PortService basebasePortService = PortService(
+  static final PortService basePortService = PortService(
       isLocal: true,
       info: {
         "name": "未知类型",
